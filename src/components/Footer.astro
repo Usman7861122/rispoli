@@ -1,0 +1,107 @@
+---
+import { site } from '../data/site';
+import { locations } from '../data/locations';
+import logoWhite from '../assets/logo-mark-white.png';
+import palm from '../assets/palm.png';
+
+const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
+const services = (site.nav.find((n) => n.label === 'Services')?.children ?? []).filter((c) => c.href !== '/services');
+const explore = site.nav.filter((n) => n.label !== 'Services');
+const legal = [
+  { label: 'Privacy', href: '/privacy' },
+  { label: 'Terms', href: '/terms-conditions' },
+  { label: 'Accessibility', href: '/accessibility' },
+];
+const mask = `-webkit-mask-image:url(${palm.src});mask-image:url(${palm.src});-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;`;
+const btn = 'group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.2em]';
+const sweep = 'absolute inset-0 -translate-x-full transition-transform duration-500 group-hover:translate-x-0';
+const colTitle = 'flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.26em] text-palm-light';
+const link = 'inline-block py-1.5 text-[16px] text-white/75 transition-colors duration-300 hover:text-white';
+---
+<footer class="relative isolate overflow-hidden bg-navy-deep text-white">
+  <span aria-hidden="true" class="pointer-events-none absolute -right-24 top-24 -z-10 hidden h-[560px] w-[560px] bg-white/[0.04] lg:block" style={mask}></span>
+  <span aria-hidden="true" class="pointer-events-none absolute -left-40 bottom-0 -z-10 h-[480px] w-[480px] rounded-full bg-palm/20 blur-3xl"></span>
+
+  <div class="mx-auto max-w-[1400px] px-6 lg:px-12">
+    <!-- Call to action -->
+    <div class="flex flex-col gap-8 border-b border-white/15 py-16 lg:flex-row lg:items-center lg:justify-between lg:py-20">
+      <div class="max-w-2xl">
+        <p class={colTitle}><span class="h-px w-10 bg-palm-light"></span>Start today</p>
+        <h2 class="mt-5 font-display text-[clamp(2.2rem,4.4vw,3.8rem)] leading-[1.05]">Ready to <span class="italic text-palm-light">feel better?</span></h2>
+        <p class="mt-4 max-w-[48ch] text-[18px] leading-relaxed text-white/75">Book a visit and we will help you find the right next step, starting with simple, non-surgical care.</p>
+      </div>
+      <div class="flex flex-wrap gap-4">
+        <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer" class={`${btn} bg-white text-navy`}>
+          <span aria-hidden="true" class={`${sweep} bg-palm`}></span>
+          <span class="relative transition-colors duration-300 group-hover:text-white">Book a visit</span>
+        </a>
+        <a href={tel} class={`${btn} border border-white/40 text-white`}>
+          <span aria-hidden="true" class={`${sweep} bg-white`}></span>
+          <span class="relative transition-colors duration-300 group-hover:text-navy">Call {site.phone}</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main columns -->
+    <div class="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-4">
+        <a href="/" aria-label={`${site.name}, home`} class="flex items-center gap-4">
+          <img src={logoWhite.src} alt="" width="546" height="231" class="h-14 w-auto" loading="lazy" />
+          <span aria-hidden="true" class="h-12 w-px bg-white/30"></span>
+          <span class="leading-none">
+            <span class="block text-[11px] font-semibold uppercase tracking-[0.34em] text-white/85">Westside</span>
+            <span class="mt-1.5 block font-display text-[19px] text-white">Interventional Pain &amp; Physiatry</span>
+          </span>
+        </a>
+        <p class="mt-6 max-w-[36ch] text-[16px] leading-relaxed text-white/70">{site.tagline}</p>
+        <ul class="mt-6 space-y-2 text-[16px]">
+          <li><a href={tel} class="text-white/90 transition-colors hover:text-palm-light">{site.phone}</a></li>
+          <li><a href={`mailto:${site.email}`} class="break-all text-white/90 transition-colors hover:text-palm-light">{site.email}</a></li>
+          <li class="text-white/60">Fax {site.fax}</li>
+        </ul>
+      </div>
+
+      <nav aria-label="Explore" class="lg:col-span-2">
+        <h3 class={colTitle}><span class="h-px w-8 bg-palm-light"></span>Explore</h3>
+        <ul class="mt-5">{explore.map((n) => <li><a href={n.href} class={link}>{n.label}</a></li>)}</ul>
+      </nav>
+
+      <nav aria-label="Services" class="lg:col-span-2">
+        <h3 class={colTitle}><span class="h-px w-8 bg-palm-light"></span>Services</h3>
+        <ul class="mt-5">
+          {services.map((s) => <li><a href={s.href} class={link}>{s.label}</a></li>)}
+          <li><a href="/services" class={link}>View More Services</a></li>
+        </ul>
+      </nav>
+
+      <div class="md:col-span-2 lg:col-span-4">
+        <h3 class={colTitle}><span class="h-px w-8 bg-palm-light"></span>Visit us</h3>
+        <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          {locations.offices.map((o) => (
+            <li class="rounded-2xl border border-white/15 bg-white/[0.04] p-5 backdrop-blur-sm">
+              <p class="font-display text-[1.35rem] leading-tight">{o.city}</p>
+              <address class="mt-2 text-[15px] not-italic leading-relaxed text-white/70">{o.street}<br />{o.cityLine}</address>
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${o.street}, ${o.cityLine}`)}`}
+                target="_blank" rel="noopener noreferrer"
+                class="group relative mt-4 inline-flex items-center overflow-hidden rounded-full border border-white/35 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white"
+              >
+                <span aria-hidden="true" class={`${sweep} bg-palm`}></span>
+                <span class="relative">Get directions</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="mt-5 text-[15px] text-white/60">{site.hours[0].days}: {site.hours[0].time}</p>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="flex flex-col gap-4 border-t border-white/15 py-7 text-[14px] text-white/55 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-1">
+        {legal.map((l) => <li><a href={l.href} class="transition-colors hover:text-white">{l.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,19 @@
+---
+import Section from '../ui/Section.astro';
+import { services } from '../../data/services';
+interface Props { exclude?: string[] }
+const { exclude = [] } = Astro.props;
+const list = services.filter((s) => !exclude.includes(s.slug));
+---
+<Section id="services" tone="bone">
+  <h2 class="font-display text-3xl md:text-4xl">Our services</h2>
+  <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {list.map((s) => (
+      <li class="bg-white p-6">
+        <h3 class="text-xl font-medium">{s.title}</h3>
+        <p class="mt-2 text-ink/70">{s.short}</p>
+        <a href={`/services/${s.slug}`} class="mt-4 inline-block rounded-full border border-brand px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-brand transition-colors hover:bg-brand hover:text-white">Learn more</a>
+      </li>
+    ))}
+  </ul>
+</Section>

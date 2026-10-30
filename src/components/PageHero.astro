@@ -1,0 +1,14 @@
+---
+import { site } from '../data/site';
+interface Props { title: string; eyebrow?: string; lede?: string; image?: string; imageAlt?: string }
+const { title, eyebrow, lede, image, imageAlt = '' } = Astro.props;
+const alt = imageAlt || `${title} at ${site.name}`;
+---
+<section class="relative bg-ink pb-20 pt-40 text-white">
+  {image && <img src={image} alt={alt} class="absolute inset-0 h-full w-full object-cover opacity-40" loading="eager" />}
+  <div class="relative mx-auto max-w-7xl px-5">
+    {eyebrow && <p class="text-xs uppercase tracking-[0.25em] text-white/70">{eyebrow}</p>}
+    <h1 class="mt-3 max-w-3xl font-display text-4xl md:text-5xl">{title}</h1>
+    {lede && <p class="mt-4 max-w-2xl text-lg text-white/80">{lede}</p>}
+  </div>
+</section>

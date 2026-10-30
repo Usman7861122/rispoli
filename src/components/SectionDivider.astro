@@ -1,0 +1,12 @@
+---
+import palm from '../assets/palm.png';
+const url = palm.src;
+const mask = `-webkit-mask:url(${url}) center/contain no-repeat;mask:url(${url}) center/contain no-repeat;`;
+---
+<div class="bg-white" role="separator" aria-hidden="true">
+  <div class="mx-auto flex max-w-[1400px] items-center gap-5 px-6 pb-0 pt-2 lg:px-12">
+    <span class="h-px flex-1 bg-gradient-to-r from-transparent via-navy/20 to-navy/30"></span>
+    <span class="block h-9 w-9 bg-palm" style={mask}></span>
+    <span class="h-px flex-1 bg-gradient-to-l from-transparent via-navy/20 to-navy/30"></span>
+  </div>
+</div>

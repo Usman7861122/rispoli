@@ -1,0 +1,17 @@
+---
+import Section from '../ui/Section.astro';
+import Button from '../ui/Button.astro';
+---
+<Section id="about">
+  <div class="grid gap-10 md:grid-cols-2">
+    <div class="aspect-[4/5] bg-bone" role="img" aria-label="Portrait of the doctor (placeholder)"></div>
+    <div>
+      <h2 class="font-display text-3xl md:text-4xl">Dr. Name</h2>
+      <p class="mt-4 text-ink/70">Two short paragraphs about the doctor. TODO.</p>
+      <div class="mt-8 flex gap-3">
+        <Button href="/about">Full biography</Button>
+        <Button href="/about#credentials" variant="outline">Boards and education</Button>
+      </div>
+    </div>
+  </div>
+</Section>

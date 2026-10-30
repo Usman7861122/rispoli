@@ -1,0 +1,19 @@
+---
+import Section from '../ui/Section.astro';
+import ContactForm from '../react/ContactForm';
+import { site } from '../../data/site';
+import { services } from '../../data/services';
+---
+<Section id="contact" tone="bone">
+  <div class="grid gap-12 md:grid-cols-2">
+    <div>
+      <h2 class="font-display text-3xl md:text-4xl">Contact</h2>
+      <address class="mt-6 not-italic text-ink/80">
+        {site.address.street}<br />{site.address.city}, {site.address.state} {site.address.zip}<br />
+        <a href={`tel:${site.phone}`}>{site.phone}</a>
+      </address>
+      <ul class="mt-4">{site.hours.map((h) => <li>{h.days}: {h.time}</li>)}</ul>
+    </div>
+    <ContactForm client:visible api={site.contactApi} interests={services.map((s) => s.title)} />
+  </div>
+</Section>

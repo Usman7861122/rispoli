@@ -1,0 +1,11 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import AboutSection from '../components/react/AboutSection';
+import { about } from '../data/about';
+import Credentials from '../components/sections/Credentials.astro';
+import WhyChoose from '../components/sections/WhyChoose.astro';
+import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
+---
+<PageLayout title="About" eyebrow="Meet the doctor" lede="Placeholder.">
+  <AboutSection client:load data={about} /><Credentials /><WhyChoose /><TestimonialsSection />
+</PageLayout>

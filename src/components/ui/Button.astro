@@ -1,0 +1,7 @@
+---
+interface Props { href: string; external?: boolean; variant?: 'solid' | 'outline'; class?: string }
+const { href, external = false, variant = 'solid', class: cls = '' } = Astro.props;
+const base = 'inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-medium transition';
+const styles = variant === 'solid' ? 'bg-brand text-white hover:opacity-90' : 'border border-current hover:bg-white/10';
+---
+<a href={href} class={`${base} ${styles} ${cls}`} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}><slot /></a>

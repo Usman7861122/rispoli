@@ -1,0 +1,24 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import Button from '../../components/ui/Button.astro';
+import LocalSection from '../../components/sections/LocalSection.astro';
+import Services from '../../components/sections/Services.astro';
+import { services } from '../../data/services';
+import { localFor } from '../../data/local';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { service: s } }));
+}
+const { service } = Astro.props;
+const l = localFor(service.title);
+---
+<PageLayout title={l.title} eyebrow="Services" lede={service.short}>
+  <Section>
+    <p class="max-w-2xl text-ink/70">Overview. TODO: intro, what it is, who it is for, benefits, recovery, safety, FAQs.</p>
+    <div class="mt-6"><Button href={site.bookingUrl} external>Book a consultation</Button></div>
+  </Section>
+  <LocalSection topic={service.title} />
+  <Services exclude={[service.slug]} />
+</PageLayout>

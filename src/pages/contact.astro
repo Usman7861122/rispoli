@@ -1,0 +1,9 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Contact from '../components/sections/Contact.astro';
+import Insurance from '../components/sections/Insurance.astro';
+import Blog from '../components/sections/Blog.astro';
+---
+<PageLayout title="Contact" eyebrow="Get in touch" lede="Request an appointment or ask a question.">
+  <Contact /><Insurance /><Blog limit={3} />
+</PageLayout>

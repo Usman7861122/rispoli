@@ -1,0 +1,32 @@
+@import "@fontsource/dm-serif-display/400.css";
+@import "@fontsource/dm-serif-display/400-italic.css";
+@import "@fontsource-variable/source-sans-3/index.css";
+@import "tailwindcss";
+
+/* Colors taken from the logo card: navy letters, palm green, soft white card */
+@theme {
+  --color-navy: #112a59;
+  --color-navy-deep: #0a1b3d;
+  --color-palm: #2d6133; /* exact green of the palm in the logo */
+  --color-palm-soft: #e5eee7;
+  --color-palm-light: #2d6133; /* same logo green */
+  --color-mist: #f3f5f7;
+  --color-slate: #5b6472;
+  --color-ink: #0a1b3d;
+  --color-bone: #f3f5f7;
+  --color-brand: #112a59;
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-sans: "Source Sans 3 Variable", system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-white text-navy-deep font-sans antialiased; }
+
+:focus-visible { outline: 2px solid var(--color-palm); outline-offset: 3px; }
+
+@keyframes wipp-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

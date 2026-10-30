@@ -1,0 +1,7 @@
+---
+import { site } from '../data/site';
+---
+<div class="fixed inset-x-0 bottom-0 z-40 grid grid-cols-2 bg-brand text-center text-white md:hidden">
+  <a href={`tel:${site.phone}`} class="py-4">Call {site.phone}</a>
+  <a href={site.bookingUrl} target="_blank" rel="noopener noreferrer" class="border-l border-white/30 py-4">Appointment</a>
+</div>

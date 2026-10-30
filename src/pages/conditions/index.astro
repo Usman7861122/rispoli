@@ -1,0 +1,18 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../../components/ui/Section.astro';
+import { conditions } from '../../data/conditions';
+---
+<PageLayout title="Conditions" eyebrow="What we treat" lede="Pain and movement problems we help with.">
+  <Section>
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {conditions.map((c) => (
+        <li class="border border-ink/10 p-6">
+          <h2 class="text-xl font-medium">{c.title}</h2>
+          <p class="mt-2 text-ink/70">{c.short}</p>
+          <a class="mt-4 inline-block rounded-full border border-brand px-6 py-2.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-brand transition-colors hover:bg-brand hover:text-white" href={`/conditions/${c.slug}`}>Learn more</a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+</PageLayout>

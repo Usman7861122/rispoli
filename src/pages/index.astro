@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSlider from '../components/react/HeroSlider';
+import AboutSection from '../components/react/AboutSection';
+import { heroSlides } from '../data/hero';
+import { about } from '../data/about';
+import WhySection from '../components/react/WhySection';
+import ServicesSection from '../components/react/ServicesSection';
+import { homeServices } from '../data/home-services';
+import TeamSection from '../components/react/TeamSection';
+import { team } from '../data/team';
+import SportsRecovery from '../components/react/SportsRecovery';
+import { sports } from '../data/sports';
+import TestimonialsSection from '../components/react/TestimonialsSection';
+import { testimonials } from '../data/testimonials';
+import LocationsSection from '../components/react/LocationsSection';
+import { locations } from '../data/locations';
+import JourneyBand from '../components/react/JourneyBand';
+import { journey } from '../data/journey';
+import { why } from '../data/why';
+import { site } from '../data/site';
+---
+<BaseLayout>
+  <HeroSlider client:load slides={heroSlides} bookingUrl={site.bookingUrl} locations={site.locations} />
+  <AboutSection client:visible data={about} />
+  <WhySection client:visible data={why} />
+  <ServicesSection client:visible data={homeServices} bookingUrl={site.bookingUrl} />
+  <SportsRecovery client:visible data={sports} bookingUrl={site.bookingUrl} />
+  <TeamSection client:visible data={team} bookingUrl={site.bookingUrl} />
+  <TestimonialsSection client:visible data={testimonials} bookingUrl={site.bookingUrl} />
+  <LocationsSection client:visible data={locations} bookingUrl={site.bookingUrl} />
+  <JourneyBand client:visible data={journey} bookingUrl={site.bookingUrl} />
+</BaseLayout>

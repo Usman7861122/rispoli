@@ -1,0 +1,12 @@
+---
+import Section from '../ui/Section.astro';
+import { localFor } from '../../data/local';
+interface Props { topic: string }
+const l = localFor(Astro.props.topic);
+---
+<Section tone="bone">
+  <h2 class="font-display text-3xl">{l.sectionTitle}</h2>
+  <ul class="mt-6 flex flex-wrap gap-2">
+    {l.areas.map((a) => <li class="rounded-full border border-ink/20 px-4 py-1 text-sm">{a}</li>)}
+  </ul>
+</Section>
