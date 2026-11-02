@@ -117,9 +117,10 @@ export function ServiceHero({ data, photo, bookingUrl, phone }: {
 }
 
 /* ---------- Quick facts + what it is ---------- */
-export function ServiceIntro({ facts, what }: {
+export function ServiceIntro({ facts, what, local }: {
   facts: { label: string; value: string }[];
   what: { eyebrow: string; title: string; accent: string; paragraphs: string[] };
+  local?: { city: string; title: string; text: string; areas: string[] };
 }) {
   const fade = useFade();
   return (
@@ -139,6 +140,18 @@ export function ServiceIntro({ facts, what }: {
             {what.paragraphs.map((p, i) => (
               <motion.p key={i} {...fade(0.1 + i * 0.08)} className="text-[19px] leading-relaxed text-slate">{p}</motion.p>
             ))}
+            {local && (
+              <motion.div {...fade(0.3)} className="rounded-xl bg-palm p-7 text-white">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-palm-soft">{local.city}</p>
+                <h3 className="mt-2 font-display text-[28px] leading-tight">{local.title}</h3>
+                <p className="mt-3 text-[18px] leading-relaxed text-white/90">{local.text}</p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {local.areas.map((a) => (
+                    <li key={a} className="rounded-full border border-white/40 px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.14em]">{a}</li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
@@ -282,13 +295,13 @@ export function ServiceFaq({ safety, faqs }: { safety: { title: string; text: st
 /* ---------- Providers ---------- */
 export interface ProviderCard { slug: string; name: string; role: string; image: string; position: string; alt: string; href: string; line: string }
 
-export function ServiceProviders({ title, cards }: { title: string; cards: ProviderCard[] }) {
+export function ServiceProviders({ title, accent, text, cards }: { title: string; accent: string; text?: string; cards: ProviderCard[] }) {
   const fade = useFade();
   return (
     <section className="relative isolate overflow-hidden bg-navy-deep py-20 text-white lg:py-28" aria-label="Providers">
       <PalmWatermark className="-left-24 bottom-0 h-[460px] w-[460px]" color="bg-white/[0.04]" side={-1} />
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-        <Head eyebrow="Your providers" title={title} accent="treat this." dark text="These providers perform this procedure. Tap a card to read about their training." />
+        <Head eyebrow="Your providers" title={title} accent={accent} dark text={text ?? 'These providers perform this procedure. Tap a card to read about their training.'} />
         <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           {cards.map((c, i) => (
             <motion.li key={c.slug} {...fade(i * 0.08)}>
@@ -314,34 +327,47 @@ export function ServiceProviders({ title, cards }: { title: string; cards: Provi
 /* ---------- Locations ---------- */
 export interface LocationCard { slug: string; city: string; street: string; cityLine: string; image: string; position: string; providers: string[] }
 
-export function ServiceLocations({ title, cards, bookingUrl, phone }: { title: string; cards: LocationCard[]; bookingUrl: string; phone: string }) {
+export function ServiceLocations({ title, accent, text, cards, bookingUrl, phone, basePath, currentSlug, topic }: {
+  title: string; accent: string; text: string; cards: LocationCard[]; bookingUrl: string; phone: string;
+  basePath: string; currentSlug?: string; topic: string;
+}) {
   const fade = useFade();
   const map = (c: LocationCard) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${c.street}, ${c.cityLine}`)}`;
   return (
     <section id="locations" className="scroll-mt-28 bg-palm-soft py-20 lg:py-28" aria-label="Locations">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
-        <Head eyebrow="Where we treat" title={title} accent="close to you." text="You can have this procedure at any of our three offices." />
+        <Head eyebrow="Where we treat" title={title} accent={accent} text={text} />
         <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {cards.map((c, i) => (
-            <motion.li key={c.slug} {...fade(i * 0.08)} className="group flex flex-col rounded-xl bg-white p-3 shadow-sm ring-1 ring-navy/10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
-              <span className="relative block overflow-hidden rounded-xl">
-                <img src={c.image} alt={`${c.city} office`} loading="lazy" className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: c.position }} />
-                <span aria-hidden="true" className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-palm transition-transform duration-500 group-hover:scale-x-100" />
-              </span>
-              <span className="flex flex-1 flex-col px-3 pb-3 pt-5">
-                <span className="font-display text-[28px] leading-tight text-navy-deep">{c.city}</span>
-                <address className="mt-2 text-[16px] not-italic leading-relaxed text-slate">{c.street}<br />{c.cityLine}</address>
-                <span className="mt-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm">Providers here</span>
-                <span className="mt-1 text-[16px] leading-snug text-navy-deep">{c.providers.join(' · ')}</span>
-                <span className="mt-6 flex flex-wrap gap-3">
-                  <a href={bookingUrl} target="_blank" rel="noopener" className="rounded-full bg-palm px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-navy-deep">Book here</a>
-                  <a href={map(c)} target="_blank" rel="noopener" className={btnGhostLight}>Directions</a>
+          {cards.map((c, i) => {
+            const here = c.slug === currentSlug;
+            const href = `${basePath}/${c.slug}`;
+            return (
+              <motion.li key={c.slug} {...fade(i * 0.08)} className={`group flex flex-col rounded-xl bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl ${here ? 'ring-2 ring-palm' : 'ring-1 ring-navy/10'}`}>
+                <a href={href} aria-label={`${topic} in ${c.city}`} aria-current={here ? 'page' : undefined} className="relative block overflow-hidden rounded-xl">
+                  <img src={c.image} alt={`${c.city} office`} loading="lazy" className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: c.position }} />
+                  <span aria-hidden="true" className="absolute inset-x-3 bottom-3 translate-y-2 rounded-full bg-navy-deep/90 px-4 py-2 text-center text-[12px] font-semibold uppercase tracking-[0.16em] text-white opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                    {here ? 'You are viewing this office' : `See ${c.city} page →`}
+                  </span>
+                  {here && <span className="absolute left-3 top-3 rounded-full bg-palm px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">You are here</span>}
+                </a>
+                <span className="flex flex-1 flex-col px-3 pb-3 pt-5">
+                  <a href={href} className="font-display text-[28px] leading-tight text-navy-deep transition-colors hover:text-palm">{c.city}</a>
+                  <address className="mt-2 text-[16px] not-italic leading-relaxed text-slate">{c.street}<br />{c.cityLine}</address>
+                  <span className="mt-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm">Providers here</span>
+                  <span className="mt-1 text-[16px] leading-snug text-navy-deep">{c.providers.join(' · ')}</span>
+                  <span className="mt-6 flex flex-wrap gap-3">
+                    <a href={bookingUrl} target="_blank" rel="noopener" className="rounded-full bg-palm px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-navy-deep">Book here</a>
+                    <a href={map(c)} target="_blank" rel="noopener" className={btnGhostLight}>Directions</a>
+                  </span>
                 </span>
-              </span>
-            </motion.li>
-          ))}
+              </motion.li>
+            );
+          })}
         </ul>
-        <div className="mt-10"><a href={tel(phone)} className={btnGhostLight}>Call {phone}</a></div>
+        <div className="mt-10 flex flex-wrap gap-3">
+          {currentSlug && <a href={basePath} className={btnGhostLight}>All {topic} info</a>}
+          <a href={tel(phone)} className={btnGhostLight}>Call {phone}</a>
+        </div>
       </div>
     </section>
   );

@@ -6,6 +6,7 @@
 
 export const esi = {
   slug: 'epidural-steroid-injections',
+  topic: 'epidural steroid injections', // used inside city-page sentences
   seoTitle: 'Epidural Steroid Injections',
   seoDescription:
     'Epidural steroid injections calm an irritated spinal nerve to ease back, neck, arm and leg pain. Done in our Santa Monica, Marina Del Rey and Newport Beach offices.',

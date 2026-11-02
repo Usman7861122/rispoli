@@ -1,0 +1,49 @@
+---
+// One service page. Without `office` it is the general page; with `office` it is the city version.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  ServiceHero, ServiceIntro, ServiceApproaches, ServiceCandidates, ServiceSteps,
+  ServiceFaq, ServiceProviders, ServiceLocations, ServiceRelated,
+} from './react/ServiceBlocks';
+import { team } from '../data/team';
+import { locations } from '../data/locations';
+import { localize } from '../data/service-local';
+import { site } from '../data/site';
+
+const { d, office } = Astro.props;
+const base = `/services/${d.slug}`;
+const everyone = [...team.lead, ...team.peers];
+const allProviders = d.providerSlugs
+  .map((slug: string) => everyone.find((p) => p.slug === slug))
+  .filter((p: any) => !!p);
+const treatingNames = allProviders.map((p: any) => p.name);
+const loc = office ? localize(d, office, treatingNames) : null;
+
+const shown = loc ? allProviders.filter((p: any) => loc.treatingHere.includes(p.name)) : allProviders;
+const providerCards = shown.map((p: any) => ({ slug: p.slug, name: p.name, role: p.role, image: p.image, position: p.position, alt: p.imageAlt, href: p.href, line: d.providerLines[p.slug] ?? '' }));
+const locationCards = d.locationSlugs
+  .map((slug: string) => locations.offices.find((o) => o.slug === slug))
+  .filter((o: any) => !!o)
+  .map((o: any) => ({
+    slug: o.slug, city: o.city, street: o.street, cityLine: o.cityLine, image: o.image, position: o.position,
+    providers: o.providers.map((p: any) => p.name).filter((n: string) => treatingNames.includes(n)),
+  }));
+---
+<BaseLayout title={loc?.seoTitle ?? d.seoTitle} description={loc?.seoDescription ?? d.seoDescription}>
+  <ServiceHero client:load data={loc?.hero ?? d.hero} photo={d.photo} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <ServiceIntro client:visible facts={d.facts} what={d.what} local={loc?.localNote} />
+  <ServiceApproaches client:visible data={d.approaches} />
+  <ServiceCandidates client:visible data={d.candidates} photo={d.sidePhoto} />
+  <ServiceSteps client:visible data={d.steps} />
+  <ServiceFaq client:visible safety={d.safety} faqs={loc?.faqs ?? d.faqs} />
+  <ServiceProviders client:visible title={office ? `Doctors in ${office.city}.` : 'Doctors who treat this.'} accent={office ? `${office.city}.` : 'treat this.'} text={office ? `These providers perform this procedure at our ${office.city} office.` : undefined} cards={providerCards} />
+  <ServiceLocations
+    client:visible
+    title={office ? `Also at our other offices.` : 'Treated close to you.'}
+    accent={office ? 'other offices.' : 'close to you.'}
+    text={office ? 'Choose another office to see its page.' : 'Pick an office to see its page, or book at the one nearest to you.'}
+    cards={locationCards} bookingUrl={site.bookingUrl} phone={site.phone}
+    basePath={base} currentSlug={office?.slug} topic={d.topic}
+  />
+  <ServiceRelated client:visible items={d.related} />
+</BaseLayout>

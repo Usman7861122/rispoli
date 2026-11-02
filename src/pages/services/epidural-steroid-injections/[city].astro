@@ -1,0 +1,15 @@
+---
+// City versions: /services/epidural-steroid-injections/santa-monica and so on.
+import ServicePageView from '../../../components/ServicePageView.astro';
+import { esi } from '../../../data/esi';
+import { locations } from '../../../data/locations';
+
+export function getStaticPaths() {
+  return esi.locationSlugs.map((slug) => ({
+    params: { city: slug },
+    props: { office: locations.offices.find((o) => o.slug === slug)! },
+  }));
+}
+const { office } = Astro.props;
+---
+<ServicePageView d={esi} office={office} />
