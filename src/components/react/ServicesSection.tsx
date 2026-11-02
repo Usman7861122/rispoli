@@ -106,7 +106,7 @@ export default function ServicesSection({ data, bookingUrl }: Props) {
           </div>
         </div>
 
-        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:mt-20 xl:grid-cols-4">
           {data.items.map((s, i) => <Card key={s.slug} s={s} i={i} />)}
         </ul>
 
