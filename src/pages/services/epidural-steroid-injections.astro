@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  ServiceHero, ServiceIntro, ServiceApproaches, ServiceCandidates, ServiceSteps,
+  ServiceFaq, ServiceProviders, ServiceLocations, ServiceRelated,
+} from '../../components/react/ServiceBlocks';
+import { esi as d } from '../../data/esi';
+import { team } from '../../data/team';
+import { locations } from '../../data/locations';
+import { site } from '../../data/site';
+
+const everyone = [...team.lead, ...team.peers];
+const providerCards = d.providerSlugs
+  .map((slug) => everyone.find((p) => p.slug === slug))
+  .filter((p): p is NonNullable<typeof p> => !!p)
+  .map((p) => ({ slug: p.slug, name: p.name, role: p.role, image: p.image, position: p.position, alt: p.imageAlt, href: p.href, line: d.providerLines[p.slug] ?? '' }));
+
+// Only list providers at each office who also treat this.
+const treatingNames = new Set(providerCards.map((p) => p.name));
+const locationCards = d.locationSlugs
+  .map((slug) => locations.offices.find((o) => o.slug === slug))
+  .filter((o): o is NonNullable<typeof o> => !!o)
+  .map((o) => ({
+    slug: o.slug, city: o.city, street: o.street, cityLine: o.cityLine, image: o.image, position: o.position,
+    providers: o.providers.map((p) => p.name).filter((n) => treatingNames.has(n)),
+  }));
+---
+<BaseLayout title={d.seoTitle} description={d.seoDescription}>
+  <ServiceHero client:load data={d.hero} photo={d.photo} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <ServiceIntro client:visible facts={d.facts} what={d.what} />
+  <ServiceApproaches client:visible data={d.approaches} />
+  <ServiceCandidates client:visible data={d.candidates} photo={d.sidePhoto} />
+  <ServiceSteps client:visible data={d.steps} />
+  <ServiceFaq client:visible safety={d.safety} faqs={d.faqs} />
+  <ServiceProviders client:visible title="Doctors who treat this." cards={providerCards} />
+  <ServiceLocations client:visible title="Treated close to you." cards={locationCards} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <ServiceRelated client:visible items={d.related} />
+</BaseLayout>
