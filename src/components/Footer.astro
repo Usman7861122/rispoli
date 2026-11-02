@@ -5,12 +5,20 @@ import logoWhite from '../assets/logo-mark-white.png';
 import palm from '../assets/palm.png';
 
 const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
-const services = (site.nav.find((n) => n.label === 'Services')?.children ?? []).filter((c) => c.href !== '/services');
-const explore = site.nav.filter((n) => n.label !== 'Services');
+const services = (site.nav.find((n) => n.label === 'Services')?.children ?? []).slice(0, 4);
+// Quick links and legal links follow the old site's footer.
+const explore = [
+  { label: 'Home', href: '/' },
+  { label: 'Meet Dr. Rispoli', href: '/dr-rispoli' },
+  { label: 'Meet The Team', href: '/meet-the-team' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Testimonials', href: '/testimonials' },
+  { label: 'Contact', href: '/contact' },
+];
 const legal = [
-  { label: 'Privacy', href: '/privacy' },
-  { label: 'Terms', href: '/terms-conditions' },
-  { label: 'Accessibility', href: '/accessibility' },
+  { label: 'Articles', href: '/blog' },
+  { label: 'Privacy Policy', href: '/privacy' },
+  { label: 'Terms & Conditions', href: '/terms-conditions' },
 ];
 const mask = `-webkit-mask-image:url(${palm.src});mask-image:url(${palm.src});-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;`;
 const btn = 'group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.2em]';
@@ -76,15 +84,15 @@ const link = 'inline-block py-1.5 text-[16px] text-white/75 transition-colors du
 
       <div class="md:col-span-2 lg:col-span-4">
         <h3 class={colTitle}><span class="h-px w-8 bg-palm-light"></span>Visit us</h3>
-        <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        <ul class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
           {locations.offices.map((o) => (
-            <li class="rounded-2xl border border-white/15 bg-white/[0.04] p-5 backdrop-blur-sm">
-              <p class="font-display text-[1.35rem] leading-tight">{o.city}</p>
-              <address class="mt-2 text-[15px] not-italic leading-relaxed text-white/70">{o.street}<br />{o.cityLine}</address>
+            <li class="rounded-2xl border border-white/15 bg-white/[0.04] p-4 backdrop-blur-sm">
+              <p class="font-display text-[1.25rem] leading-tight">{o.city}</p>
+              <address class="mt-1 text-[14.5px] not-italic leading-relaxed text-white/70">{o.street}<br />{o.cityLine}</address>
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${o.street}, ${o.cityLine}`)}`}
                 target="_blank" rel="noopener noreferrer"
-                class="group relative mt-4 inline-flex items-center overflow-hidden rounded-full border border-white/35 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white"
+                class="group relative mt-3 inline-flex items-center overflow-hidden rounded-full border border-white/35 px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-white"
               >
                 <span aria-hidden="true" class={`${sweep} bg-palm`}></span>
                 <span class="relative">Get directions</span>
@@ -92,7 +100,7 @@ const link = 'inline-block py-1.5 text-[16px] text-white/75 transition-colors du
             </li>
           ))}
         </ul>
-        <p class="mt-5 text-[15px] text-white/60">{site.hours[0].days}: {site.hours[0].time}</p>
+        
       </div>
     </div>
 

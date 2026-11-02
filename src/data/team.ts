@@ -17,7 +17,7 @@ export const team = {
   title: 'The people behind your care.',
   accent: 'people',
   intro: 'Five specialists, one plan. Each provider brings their own training, and every patient gets the full team behind them.',
-  cta: { label: 'Meet the whole team', href: '/about' },
+  cta: { label: 'Meet the whole team', href: '/meet-the-team' },
   lead: [
     {
       slug: 'leia-rispoli',

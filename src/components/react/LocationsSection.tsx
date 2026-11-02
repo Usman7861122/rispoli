@@ -31,7 +31,6 @@ function Icon({ d }: { d: string }) {
 }
 
 const PIN = 'M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z';
-const CLOCK = 'M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z';
 
 export default function LocationsSection({ data, bookingUrl }: Props) {
   const reduce = useReducedMotion();
@@ -59,7 +58,7 @@ export default function LocationsSection({ data, bookingUrl }: Props) {
           <motion.p {...fade(0.16)} className="max-w-[46ch] text-[18px] leading-relaxed text-slate">{data.intro}</motion.p>
         </div>
 
-        <ul className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-2 lg:gap-10">
+        <ul className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-2 xl:grid-cols-3 lg:gap-8">
           {data.offices.map((o, i) => {
             const full = `${o.street}, ${o.cityLine}`;
             const q = encodeURIComponent(full);
@@ -87,27 +86,31 @@ export default function LocationsSection({ data, bookingUrl }: Props) {
 
                 {/* Details */}
                 <div className="flex flex-1 flex-col p-6 lg:p-8">
-                  <h3 className="font-display text-[1.8rem] leading-tight text-navy lg:text-[2.1rem]">{o.city}</h3>
-                  <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                    <div className="flex items-start gap-3">
-                      <Icon d={PIN} />
-                      <address className="text-[16px] not-italic leading-relaxed text-slate">{o.street}<br />{o.cityLine}</address>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Icon d={CLOCK} />
-                      <div className="text-[16px] leading-relaxed text-slate">
-                        {o.hours.map((h) => <p key={h.days}><span className="font-semibold text-navy">{h.days}</span><br />{h.time}</p>)}
-                      </div>
-                    </div>
+                  <h3 className="font-display text-[1.8rem] leading-tight text-navy lg:text-[2rem]">{o.city}</h3>
+                  <div className="mt-4 flex items-start gap-3">
+                    <Icon d={PIN} />
+                    <address className="text-[16px] not-italic leading-relaxed text-slate">{o.street}<br />{o.cityLine}</address>
                   </div>
+                  <p className="mt-4 text-[15.5px] leading-relaxed text-slate">{o.blurb}</p>
+                  <div className="mt-5">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-palm">Providers</p>
+                    <ul className="mt-2 space-y-1.5">
+                      {o.providers.map((p) => (
+                        <li key={p.name} className="text-[15px] leading-snug text-navy"><span className="font-semibold">{p.name}</span><span className="text-slate"> · {p.role}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                  <ul className="mt-5 flex flex-wrap gap-2" aria-label={`Areas near ${o.city}`}>
+                    {o.nearby.map((n) => <li key={n} className="rounded-full bg-palm-soft px-3 py-1 text-[12.5px] font-medium text-palm">{n}</li>)}
+                  </ul>
                   <div className="mt-auto flex flex-wrap gap-3 pt-7">
-                    <a href={`https://www.google.com/maps/dir/?api=1&destination=${q}`} target="_blank" rel="noopener" className="group/btn relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-palm px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-white">
+                    <a href={`https://www.google.com/maps/dir/?api=1&destination=${q}`} target="_blank" rel="noopener" className="group/btn relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-palm px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-white">
                       <span aria-hidden="true" className="absolute inset-0 -translate-x-full bg-navy transition-transform duration-500 group-hover/btn:translate-x-0" />
                       <span className="relative flex items-center gap-3">Get directions <Arrow /></span>
                     </a>
-                    <a href={`https://www.google.com/maps/search/?api=1&query=${q}`} target="_blank" rel="noopener" className="group/btn relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-navy/25 px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.2em] text-navy transition-colors duration-500 hover:text-white">
+                    <a href={`/locations/${o.slug}`} className="group/btn relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-navy/25 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-navy transition-colors duration-500 hover:text-white">
                       <span aria-hidden="true" className="absolute inset-0 -translate-x-full bg-navy transition-transform duration-500 group-hover/btn:translate-x-0" />
-                      <span className="relative flex items-center gap-3">Open in Maps <Arrow /></span>
+                      <span className="relative flex items-center gap-3">View office <Arrow /></span>
                     </a>
                   </div>
                 </div>

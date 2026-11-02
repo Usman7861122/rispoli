@@ -16,7 +16,7 @@ interface Props {
   nav: readonly NavItem[];
   bookingUrl: string;
   phone: string;
-  topBar?: { areas: readonly { label: string; href: string }[]; waitlist: { label: string; href: string } };
+  topBar?: { message: string; cta: { label: string; href: string } };
 }
 
 /* Clear over the hero photo, turns white after you scroll */
@@ -58,17 +58,14 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
     >
       {topBar && (
         <div className={`hidden overflow-hidden bg-palm text-white shadow-[inset_0_-1px_0_rgba(255,255,255,0.18)] transition-[max-height,opacity] duration-300 md:block ${scrolled || open ? 'max-h-0 opacity-0' : 'max-h-11 opacity-100'}`} aria-hidden={scrolled || open}>
-          <div className="mx-auto flex h-11 max-w-[1400px] items-center justify-between px-6 text-[13px] font-semibold uppercase tracking-[0.14em] lg:px-12">
-            <ul className="flex items-center">
-              {topBar.areas.map((a, i) => (
-                <li key={a.href} className={`${i > 0 ? 'border-l border-white/45 pl-5' : ''} ${i < topBar.areas.length - 1 ? 'pr-5' : ''}`}>
-                  <a href={a.href} tabIndex={scrolled || open ? -1 : 0} className="transition-colors hover:text-palm-soft">{a.label}</a>
-                </li>
-              ))}
-            </ul>
-            <div className="flex items-center">
-              <a href={topBar.waitlist.href} tabIndex={scrolled || open ? -1 : 0} className="hidden whitespace-nowrap pr-5 transition-colors hover:text-palm-soft lg:block">{topBar.waitlist.label}</a>
-              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" tabIndex={scrolled || open ? -1 : 0} className="whitespace-nowrap border-white/45 pr-5 transition-colors hover:text-palm-soft lg:border-l lg:pl-5">Request an appointment</a>
+          <div className="mx-auto flex h-11 max-w-[1400px] items-center justify-between gap-6 px-6 text-[13px] font-semibold lg:px-12">
+            <p className="flex min-w-0 items-center gap-3">
+              <span aria-hidden="true" className="h-1.5 w-1.5 shrink-0 rounded-full bg-white" />
+              <span className="truncate">{topBar.message}</span>
+              <a href={topBar.cta.href} tabIndex={scrolled || open ? -1 : 0} className="hidden shrink-0 rounded-full border border-white/50 px-3.5 py-1 text-[11px] uppercase tracking-[0.14em] transition-colors hover:bg-white hover:text-palm lg:inline-block">{topBar.cta.label}</a>
+            </p>
+            <div className="flex shrink-0 items-center text-[12px] uppercase tracking-[0.14em]">
+              <a href={bookingUrl} target="_blank" rel="noopener noreferrer" tabIndex={scrolled || open ? -1 : 0} className="whitespace-nowrap pr-5 transition-colors hover:text-palm-soft">Appointment</a>
               <a href={tel} tabIndex={scrolled || open ? -1 : 0} className="flex items-center gap-2 whitespace-nowrap border-l border-white/45 pl-5 transition-colors hover:text-palm-soft">
                 <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1z" /></svg>
                 {phone}
@@ -96,20 +93,29 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
         {/* Full menu only from xl (1280px): the logo lockup is long */}
         <nav className="hidden shrink-0 items-center gap-5 xl:flex 2xl:gap-8" aria-label="Main">
           {nav.map((n) => (
-            <div key={n.href} onMouseEnter={() => (n.mega ? openMega(n.label) : setMega(null))} onMouseLeave={closeMega}>
+            <div key={n.label} className="relative" onMouseEnter={() => (n.mega ? openMega(n.label) : n.children ? openMega(n.label) : setMega(null))} onMouseLeave={closeMega}>
               <a
                 href={n.href}
-                aria-haspopup={n.mega ? 'true' : undefined}
-                aria-expanded={n.mega ? mega === n.label : undefined}
-                onFocus={() => (n.mega ? openMega(n.label) : setMega(null))}
+                aria-haspopup={n.children ? 'true' : undefined}
+                aria-expanded={n.children ? mega === n.label : undefined}
+                onFocus={() => (n.children ? openMega(n.label) : setMega(null))}
                 className={`group relative flex items-center gap-1 whitespace-nowrap py-2 text-[15px] font-medium ${solid ? 'text-navy' : 'text-white'}`}
               >
                 {n.label}
-                {n.mega && (
+                {n.children && (
                   <svg viewBox="0 0 24 24" className={`h-3.5 w-3.5 transition-transform duration-300 ${mega === n.label ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
                 )}
                 <span className={`absolute inset-x-0 -bottom-0.5 h-px origin-left bg-palm transition-transform duration-300 ease-out ${mega === n.label ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} />
               </a>
+              {n.children && !n.mega && mega === n.label && (
+                <div className="absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3">
+                  <ul className="overflow-hidden rounded-2xl bg-white p-2 shadow-[0_30px_60px_-25px_rgba(10,27,61,0.55)] ring-1 ring-navy/5">
+                    {n.children.map((c) => (
+                      <li key={c.href}><a href={c.href} onClick={() => setMega(null)} className="block whitespace-nowrap rounded-xl px-4 py-3 text-[15px] font-medium text-navy transition-colors hover:bg-palm-soft hover:text-palm">{c.label}</a></li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ))}
           <a href={tel} className={`hidden whitespace-nowrap text-[15px] font-semibold 2xl:block ${solid ? 'text-navy' : 'text-white'}`}>{phone}</a>
@@ -169,7 +175,7 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
 
                 {/* Links */}
                 {photos ? (
-                  <ul className="col-span-8 grid grid-cols-2 gap-6">
+                  <ul className={`col-span-8 grid gap-5 ${kids.length > 2 ? 'grid-cols-3' : 'grid-cols-2'}`}>
                     {kids.map((c) => (
                       <li key={c.href}>
                         <a href={c.href} onClick={() => setMega(null)} className="group/c relative block h-full min-h-[260px] overflow-hidden rounded-2xl">
