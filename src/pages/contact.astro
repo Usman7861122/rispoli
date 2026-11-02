@@ -5,7 +5,7 @@ import { locations } from '../data/locations';
 import { allServices } from '../data/service-pages';
 import { site } from '../data/site';
 const offices = locations.offices.map((o) => ({
-  slug: o.slug, city: o.city, street: o.street, cityLine: o.cityLine, image: o.image, position: o.position,
+  slug: o.slug, city: o.city, street: o.street, cityLine: o.cityLine, image: o.image, position: o.position, blurb: o.blurb, providers: o.providers, nearby: o.nearby,
   mapsHref: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${o.street}, ${o.cityLine}`)}`,
 }));
 const services = allServices.map((s) => s.hero.name.replace(/^The /, ''));

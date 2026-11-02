@@ -327,7 +327,7 @@ export function BlogArticle({ post, services, more, bookingUrl, phone }: {
 }
 
 /* ---------- Contact ---------- */
-type Office = { slug: string; city: string; street: string; cityLine: string; image: string; position: string; mapsHref: string };
+type Office = { slug: string; city: string; street: string; cityLine: string; image: string; position: string; mapsHref: string; blurb: string; providers: { name: string; role: string }[]; nearby: string[] };
 
 function Row({ label, children }: { label: string; children: ReactNode }) {
   return <div className="flex flex-col gap-1 sm:flex-row sm:gap-4"><dt className="w-24 shrink-0 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm sm:pt-1">{label}</dt><dd className="text-[18px] text-navy-deep">{children}</dd></div>;
@@ -431,16 +431,35 @@ export function ContactBlocks({ offices, services, phone, fax, email, hours, api
       <section className="bg-palm-soft py-16 lg:py-24" aria-label="Our offices">
         <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
           <Head eyebrow="Visit us" title="Three offices, close to you." accent="close" text="Choose the office that is easiest for you to reach." />
-          <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 grid items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
             {offices.map((o, i) => (
-              <motion.li key={o.slug} {...fade(i * 0.08)} className="flex flex-col rounded-xl bg-white p-3 shadow-sm ring-1 ring-navy/10">
-                <img src={o.image} alt={`The ${o.city} office`} loading="lazy" className="aspect-square w-full rounded-xl object-cover" style={{ objectPosition: o.position }} />
-                <div className="flex flex-1 flex-col px-3 pb-3 pt-5">
-                  <p className="font-display text-[28px] leading-tight text-navy-deep">{o.city}</p>
-                  <address className="mt-2 text-[17px] not-italic leading-relaxed text-slate">{o.street}<br />{o.cityLine}</address>
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <a href={`/locations/${o.slug}`} className="rounded-full bg-palm px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-navy-deep">Office page</a>
-                    <a href={o.mapsHref} target="_blank" rel="noopener noreferrer" className={btnGhostLight}>Get directions</a>
+              <motion.li key={o.slug} {...fade(i * 0.08)} className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/5 transition-shadow duration-500 hover:shadow-[0_40px_70px_-34px_rgba(10,27,61,0.55)]">
+                <div className="relative aspect-[16/10] w-full bg-mist">
+                  <iframe title={`Map of our ${o.city} office, ${o.street}, ${o.cityLine}`} src={`https://maps.google.com/maps?q=${encodeURIComponent(`${o.street}, ${o.cityLine}`)}&t=m&z=15&output=embed&iwloc=near`} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="absolute inset-0 h-full w-full border-0 saturate-[0.85] transition-[filter] duration-500 group-hover:saturate-100" />
+                  <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/95 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-palm shadow-md backdrop-blur">{o.city}</span>
+                </div>
+                <div className="flex flex-1 flex-col p-6 lg:p-8">
+                  <h3 className="font-display text-[1.8rem] leading-tight text-navy-deep lg:text-[2rem]">{o.city}</h3>
+                  <div className="mt-4 flex items-start gap-3">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-palm-soft text-palm"><svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" /></svg></span>
+                    <address className="text-[16px] not-italic leading-relaxed text-slate">{o.street}<br />{o.cityLine}</address>
+                  </div>
+                  {/* With a mouse the details unfold on hover or keyboard focus. On touch screens they stay open. */}
+                  <p aria-hidden="true" className="mt-4 hidden items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-palm transition-opacity duration-300 [@media(hover:hover)]:flex [@media(hover:hover)]:group-hover:opacity-0 [@media(hover:hover)]:group-focus-within:opacity-0">
+                    Hover for details
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 animate-bounce motion-reduce:animate-none" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                  </p>
+                  <div className="grid grid-rows-[1fr] transition-[grid-template-rows,opacity] duration-500 ease-out motion-reduce:transition-none [@media(hover:hover)]:grid-rows-[0fr] [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:grid-rows-[1fr] [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-within:grid-rows-[1fr] [@media(hover:hover)]:group-focus-within:opacity-100">
+                    <div className="min-h-0 overflow-hidden">
+                      <p className="mt-4 text-[15.5px] leading-relaxed text-slate">{o.blurb}</p>
+                      <p className="mt-5 text-[11px] font-semibold uppercase tracking-[0.22em] text-palm">Providers</p>
+                      <ul className="mt-2 space-y-1.5">{o.providers.map((p) => <li key={p.name} className="text-[15px] leading-snug text-navy"><span className="font-semibold">{p.name}</span><span className="text-slate"> · {p.role}</span></li>)}</ul>
+                      <ul className="mt-5 flex flex-wrap gap-2" aria-label={`Areas near ${o.city}`}>{o.nearby.map((n) => <li key={n} className="rounded-full bg-palm-soft px-3 py-1 text-[12.5px] font-medium text-palm">{n}</li>)}</ul>
+                      <div className="flex flex-wrap gap-3 pt-7">
+                        <a href={o.mapsHref} target="_blank" rel="noopener noreferrer" className="rounded-full bg-palm px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-navy-deep">Get directions</a>
+                        <a href={`/locations/${o.slug}`} className={btnGhostLight}>View office</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.li>
