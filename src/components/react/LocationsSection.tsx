@@ -59,7 +59,7 @@ export default function LocationsSection({ data, bookingUrl }: Props) {
           <motion.p {...fade(0.16)} className="max-w-[46ch] text-[18px] leading-relaxed text-slate">{data.intro}</motion.p>
         </div>
 
-        <ul className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-2 xl:grid-cols-3 lg:gap-8">
+        <ul className="mt-12 grid items-start gap-6 lg:mt-16 lg:grid-cols-2 xl:grid-cols-3 lg:gap-8">
           {data.offices.map((o, i) => {
             const full = `${o.street}, ${o.cityLine}`;
             const q = encodeURIComponent(full);
@@ -92,6 +92,13 @@ export default function LocationsSection({ data, bookingUrl }: Props) {
                     <Icon d={PIN} />
                     <address className="text-[16px] not-italic leading-relaxed text-slate">{o.street}<br />{o.cityLine}</address>
                   </div>
+                  {/* On phones and tablets (no hover) the details stay open. With a mouse they unfold on hover or keyboard focus. */}
+                  <p aria-hidden="true" className="mt-4 hidden items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-palm transition-opacity duration-300 [@media(hover:hover)]:flex [@media(hover:hover)]:group-hover:opacity-0 [@media(hover:hover)]:group-focus-within:opacity-0">
+                    Hover for details
+                    <svg viewBox="0 0 24 24" className="h-4 w-4 animate-bounce motion-reduce:animate-none" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                  </p>
+                  <div className="grid grid-rows-[1fr] transition-[grid-template-rows,opacity] duration-500 ease-out [@media(hover:hover)]:grid-rows-[0fr] [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover:grid-rows-[1fr] [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-focus-within:grid-rows-[1fr] [@media(hover:hover)]:group-focus-within:opacity-100 motion-reduce:transition-none">
+                    <div className="min-h-0 overflow-hidden">
                   <p className="mt-4 text-[15.5px] leading-relaxed text-slate">{o.blurb}</p>
                   <div className="mt-5">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-palm">Providers</p>
@@ -113,6 +120,8 @@ export default function LocationsSection({ data, bookingUrl }: Props) {
                       <span aria-hidden="true" className="absolute inset-0 -translate-x-full bg-navy transition-transform duration-500 group-hover/btn:translate-x-0" />
                       <span className="relative flex items-center gap-3">View office <Arrow /></span>
                     </a>
+                  </div>
+                    </div>
                   </div>
                 </div>
               </motion.li>
