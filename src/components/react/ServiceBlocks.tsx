@@ -79,11 +79,11 @@ export function ServiceHero({ data, photo, bookingUrl, phone }: {
           <motion.p {...fade(0)} className="flex items-center gap-4 text-[13px] font-semibold uppercase tracking-[0.26em] text-palm-soft">
             <span className="h-px w-12 bg-palm-soft/70" />{data.eyebrow}
           </motion.p>
-          <motion.h1 {...fade(0.08)} className={`mt-6 font-display text-[clamp(2.8rem,6vw,5.4rem)] ${data.pill ? 'leading-[1.1]' : 'leading-[1.04]'}`}>
+          <motion.h1 {...fade(0.08)} className={`mt-6 font-display text-[clamp(2.8rem,6vw,5.4rem)] leading-[1.04]`}>
             {data.pill ? (
               <>
                 {data.name.replace(data.accent, '')}
-                <span className="mt-2 inline-block rounded-xl bg-palm px-4 pb-1 italic leading-[1.1] text-white">{data.accent}</span>
+                <span className="italic text-palm-bright">{data.accent}</span>
               </>
             ) : (
               <Title text={data.name} accent={data.accent} dark />
