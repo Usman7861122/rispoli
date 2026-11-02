@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DrHero from '../components/react/DrHero';
+import DrAbout from '../components/react/DrAbout';
+import EducationPath from '../components/react/EducationPath';
+import DrCta from '../components/react/DrCta';
+import { drRispoli as d } from '../data/dr-rispoli';
+import { site } from '../data/site';
+---
+<BaseLayout title={d.seoTitle} description={d.seoDescription}>
+  <DrHero client:load data={d.hero} photo={d.photos[0]} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <DrAbout client:visible about={d.about} focus={d.focus} photos={d.photos} />
+  <EducationPath client:visible data={d.education} />
+  <DrCta client:visible data={d.cta} bookingUrl={site.bookingUrl} phone={site.phone} />
+</BaseLayout>
