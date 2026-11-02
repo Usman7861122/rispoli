@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import palm from '../../assets/palm.png';
+import PalmWatermark from './PalmWatermark';
 import type { locations as L } from '../../data/locations';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -41,7 +42,7 @@ export default function LocationsSection({ data, bookingUrl }: Props) {
   return (
     <section id="locations" className="relative isolate overflow-hidden bg-gradient-to-b from-white via-mist to-white py-20 lg:py-32">
       <span aria-hidden="true" className="pointer-events-none absolute -left-32 top-20 -z-10 h-[460px] w-[460px] rounded-full bg-palm/10 blur-3xl" />
-      <span aria-hidden="true" className="pointer-events-none absolute -right-24 bottom-10 -z-10 hidden h-[420px] w-[420px] bg-palm/[0.06] lg:block" style={maskStyle} />
+      <PalmWatermark className="-right-24 bottom-10 h-[420px] w-[420px]" color="bg-palm/[0.07]" />
 
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import palm from '../../assets/palm.png';
+import PalmWatermark from './PalmWatermark';
 import type { Provider } from '../../data/team';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -114,7 +115,7 @@ export default function TeamSection({ data, bookingUrl }: Props) {
 
   return (
     <section id="team" className="relative overflow-hidden bg-gradient-to-b from-white via-mist to-white py-20 lg:py-32">
-      <span aria-hidden="true" className="pointer-events-none absolute -right-24 top-24 hidden h-[420px] w-[420px] bg-palm/[0.06] lg:block" style={maskStyle} />
+      <PalmWatermark className="-right-24 top-24 h-[420px] w-[420px]" color="bg-palm/[0.07]" />
       <div className="relative mx-auto max-w-[1400px] px-6 lg:px-12">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">

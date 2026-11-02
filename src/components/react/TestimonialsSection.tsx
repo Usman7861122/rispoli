@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import palm from '../../assets/palm.png';
+import PalmWatermark from './PalmWatermark';
 import type { testimonials as T } from '../../data/testimonials';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -64,7 +65,7 @@ export default function TestimonialsSection({ data, bookingUrl }: Props) {
   return (
     <section id="testimonials" className="relative isolate overflow-hidden bg-gradient-to-b from-navy-deep via-[#0e2150] to-navy-deep py-20 text-white lg:py-32">
       <span aria-hidden="true" className="pointer-events-none absolute -left-40 top-24 -z-10 h-[520px] w-[520px] rounded-full bg-palm/25 blur-3xl" />
-      <span aria-hidden="true" className="pointer-events-none absolute -right-32 bottom-0 -z-10 hidden h-[460px] w-[460px] bg-white/[0.05] lg:block" style={maskStyle} />
+      <PalmWatermark className="-right-32 bottom-0 h-[460px] w-[460px]" color="bg-white/[0.06]" />
 
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">

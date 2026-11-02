@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import palm from '../../assets/palm.png';
+import PalmWatermark from './PalmWatermark';
 import type { sports as SportsData } from '../../data/sports';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -141,7 +142,7 @@ export default function SportsRecovery({ data, bookingUrl }: Props) {
   return (
     <section id="sports-injury" className="relative isolate overflow-clip bg-gradient-to-b from-navy-deep via-navy to-navy-deep py-20 text-white lg:py-32">
       <span aria-hidden="true" className="pointer-events-none absolute -left-32 top-1/3 -z-10 h-[520px] w-[520px] rounded-full bg-palm/25 blur-3xl" />
-      <span aria-hidden="true" className="pointer-events-none absolute -left-16 -top-10 -z-10 hidden h-[460px] w-[460px] bg-white/[0.04] lg:block" style={maskStyle} />
+      <PalmWatermark side={-1} className="-left-16 -top-10 h-[460px] w-[460px]" color="bg-white/[0.05]" />
 
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:items-end lg:gap-16">

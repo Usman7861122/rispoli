@@ -3,6 +3,7 @@ import { site } from '../data/site';
 import { locations } from '../data/locations';
 import logoWhite from '../assets/logo-mark-white.png';
 import palm from '../assets/palm.png';
+import PalmWatermark from './react/PalmWatermark';
 
 const tel = `tel:${site.phone.replace(/[^0-9]/g, '')}`;
 const services = (site.nav.find((n) => n.label === 'Services')?.children ?? []).slice(0, 4);
@@ -27,7 +28,7 @@ const colTitle = 'flex items-center gap-3 text-[12px] font-semibold uppercase tr
 const link = 'inline-block py-1.5 text-[16px] text-white/75 transition-colors duration-300 hover:text-white';
 ---
 <footer class="relative isolate overflow-hidden bg-navy-deep text-white">
-  <span aria-hidden="true" class="pointer-events-none absolute -right-24 top-24 -z-10 hidden h-[560px] w-[560px] bg-white/[0.04] lg:block" style={mask}></span>
+  <PalmWatermark client:visible className="-right-24 top-24 h-[560px] w-[560px]" color="bg-white/[0.05]" />
   <span aria-hidden="true" class="pointer-events-none absolute -left-40 bottom-0 -z-10 h-[480px] w-[480px] rounded-full bg-palm/20 blur-3xl"></span>
 
   <div class="mx-auto max-w-[1400px] px-6 lg:px-12">
