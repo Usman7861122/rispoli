@@ -11,8 +11,10 @@ interface Child { label: string; href: string; text?: string; image?: string; po
 interface Mega {
   eyebrow: string; title: string; text: string; cta: { label: string; href: string };
   feature?: { title: string; text: string; image: string; position?: string; cta: { label: string; href: string } };
+  chips?: { title: string; items: readonly { label: string; href: string }[] };
 }
-interface NavItem { label: string; href: string; children?: readonly Child[]; mega?: Mega }
+interface Group { title: string; href: string; items: readonly { label: string; href: string }[] }
+interface NavItem { label: string; href: string; children?: readonly Child[]; mega?: Mega; groups?: readonly Group[] }
 interface Props {
   nav: readonly NavItem[];
   bookingUrl: string;
@@ -20,6 +22,19 @@ interface Props {
   topBar?: { message: string; cta: { label: string; href: string } };
 }
 
+
+/** Split treatment groups into columns with a similar number of lines, keeping each group whole. */
+function splitGroups(groups: readonly Group[], cols: number) {
+  const weight = (g: Group) => g.items.length + 2;
+  const target = groups.reduce((a, g) => a + weight(g), 0) / cols;
+  const out: Group[][] = Array.from({ length: cols }, () => []);
+  let c = 0, sum = 0;
+  for (const g of groups) {
+    if (sum >= target * (c + 1) - weight(g) / 2 && c < cols - 1) c++;
+    out[c].push(g); sum += weight(g);
+  }
+  return out;
+}
 
 /* Logo intro: the letters appear first, then the palm tree drops in from above and settles on the "I" */
 function AnimatedLogo({ solid, small }: { solid: boolean; small: boolean }) {
@@ -187,7 +202,7 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
             >
               <div className="mx-auto grid max-w-[1400px] grid-cols-12 gap-8 px-12 py-9">
                 {/* Intro */}
-                <div className="col-span-4 flex flex-col justify-between rounded-2xl bg-navy-deep p-8 text-white">
+                <div className={`${n.groups ? 'col-span-3' : 'col-span-4'} flex flex-col justify-between rounded-2xl bg-navy-deep p-8 text-white`}>
                   <div>
                     <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.26em] text-palm-light"><span className="h-px w-8 bg-palm-light" />{m.eyebrow}</p>
                     <p className="mt-4 font-display text-[1.9rem] leading-[1.1]">{m.title}</p>
@@ -200,7 +215,42 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
                 </div>
 
                 {/* Links */}
-                {photos ? (
+                {n.groups ? (
+                  <div className="col-span-9">
+                    <div className="grid grid-cols-3 gap-x-8">
+                      {splitGroups(n.groups, 3).map((col, ci) => (
+                        <div key={ci} className="space-y-6">
+                          {col.map((g) => (
+                            <div key={g.title}>
+                              <a href={g.href} onClick={() => setMega(null)} className="group/t flex items-center gap-3 border-b border-navy/10 pb-2.5">
+                                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-palm transition-transform duration-300 group-hover/t:scale-150" />
+                                <span className="font-display text-[1.25rem] leading-tight text-navy transition-colors group-hover/t:text-palm">{g.title}</span>
+                              </a>
+                              <ul className="mt-2">
+                                {g.items.map((it) => (
+                                  <li key={it.href + it.label}>
+                                    <a href={it.href} onClick={() => setMega(null)} className="group/i flex items-center justify-between gap-2 rounded-lg px-3 py-1.5 text-[15px] text-slate transition-colors hover:bg-palm-soft hover:text-palm">
+                                      <span>{it.label}</span>
+                                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 shrink-0 -translate-x-1 opacity-0 transition-all duration-300 group-hover/i:translate-x-0 group-hover/i:opacity-100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                    {m.chips && (
+                      <div className="mt-7 flex flex-wrap items-center gap-2.5 border-t border-navy/10 pt-5">
+                        <span className="mr-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-palm">{m.chips.title}</span>
+                        {m.chips.items.map((c) => (
+                          <a key={c.href} href={c.href} onClick={() => setMega(null)} className="rounded-full border border-navy/20 px-4 py-1.5 text-[13px] font-semibold text-navy transition-colors duration-300 hover:border-palm hover:bg-palm hover:text-white">{c.label}</a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : photos ? (
                   <ul className={`col-span-8 grid gap-5 ${kids.length > 2 ? 'grid-cols-3' : 'grid-cols-2'}`}>
                     {kids.map((c) => (
                       <li key={c.href}>
@@ -258,7 +308,7 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-x-0 bottom-0 top-[88px] overflow-y-auto bg-white xl:hidden"
+            className="fixed inset-x-0 top-[88px] h-[calc(100dvh-88px)] overflow-y-auto bg-white xl:hidden"
           >
             <ul className="mx-auto flex max-w-xl flex-col px-6 py-8">
               {nav.map((n, i) => (
@@ -278,11 +328,24 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
                         </button>
                       </div>
                       {sub === n.label && (
-                        <ul className="mb-4 space-y-1 border-l-2 border-palm/30 pl-4">
-                          {n.children.map((c) => (
-                            <li key={c.href + c.label}><a href={c.href} onClick={() => setOpen(false)} className="block py-2 text-lg text-slate">{c.label}</a></li>
+                        <div className="mb-4 border-l-2 border-palm/30 pl-4">
+                          {n.groups?.map((g) => (
+                            <div key={g.title} className="mb-3">
+                              <a href={g.href} onClick={() => setOpen(false)} className="block pt-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-palm">{g.title}</a>
+                              <ul>
+                                {g.items.map((it) => (
+                                  <li key={it.href + it.label}><a href={it.href} onClick={() => setOpen(false)} className="block py-1.5 text-lg text-slate">{it.label}</a></li>
+                                ))}
+                              </ul>
+                            </div>
                           ))}
-                        </ul>
+                          {n.groups && n.mega?.chips && <p className="pt-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-palm">{n.mega.chips.title}</p>}
+                          <ul className="space-y-1">
+                            {(n.groups && n.mega?.chips ? n.mega.chips.items : n.children).map((c) => (
+                              <li key={c.href + c.label}><a href={c.href} onClick={() => setOpen(false)} className="block py-2 text-lg text-slate">{c.label}</a></li>
+                            ))}
+                          </ul>
+                        </div>
                       )}
                     </>
                   ) : (

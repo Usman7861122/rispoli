@@ -45,8 +45,82 @@ export const site = {
         title: 'Comprehensive pain management.',
         text: 'Advanced, non-surgical treatments for pain in the spine, joints, nerves and muscles.',
         cta: { label: 'All services', href: '/services' },
-        feature: { title: 'Not sure where to start?', text: 'Tell us where it hurts and we will guide you.', image: '/images/services/back-pain.jpg', position: '76% 50%', cta: { label: 'Book appointment', href: 'BOOKING' } },
+        // "Browse by condition" buttons under the treatment groups
+        chips: {
+          title: 'Browse by condition',
+          items: [
+            { label: 'Back Pain', href: '/services/back-pain' },
+            { label: 'Neck Pain', href: '/services/neck-pain' },
+            { label: 'Spinal Stenosis', href: '/services/spinal-stenosis' },
+            { label: 'Joint Pain', href: '/services/joint-pain' },
+            { label: 'Pelvic Pain', href: '/services/pelvic-pain' },
+            { label: 'Sports Injury', href: '/services/sports-injury' },
+            { label: 'EMG', href: '/services/emg' },
+          ],
+        },
       },
+      // Treatments from the three location pages, merged and grouped. Each treatment appears once.
+      groups: [
+        {
+          title: 'Spine injections', href: '/services#spine-injections',
+          items: [
+            { label: 'Epidural steroid injections', href: '/services/epidural-steroid-injections' },
+            { label: 'Facet joint injections', href: '/services/facet-joint-injections' },
+            { label: 'SI joint injections', href: '/services/si-joint-injections' },
+            { label: 'Intracept procedure', href: '/services/intracept-procedure' },
+          ],
+        },
+        {
+          title: 'Nerve stimulation', href: '/services#nerve-stimulation',
+          items: [
+            { label: 'Spinal cord stimulator', href: '/services/spinal-cord-stimulation' },
+            { label: 'Peripheral nerve stimulator', href: '/services/peripheral-nerve-stimulator' },
+          ],
+        },
+        {
+          title: 'Pelvic care & more', href: '/services#pelvic-and-more',
+          items: [
+            { label: 'Pelvic floor injections', href: '/services/pelvic-floor-injections' },
+            { label: 'Medical acupuncture', href: '/services/medical-acupuncture' },
+          ],
+        },
+        {
+          title: 'Nerve blocks & ablation', href: '/services#nerve-blocks',
+          items: [
+            { label: 'Radiofrequency ablation', href: '/services/radiofrequency-ablation' },
+            { label: 'Genicular nerve block / RFA', href: '/services/genicular-nerve-block' },
+            { label: 'Occipital nerve block', href: '/services/occipital-nerve-block' },
+            { label: 'Sympathetic blocks', href: '/services/sympathetic-blocks' },
+            { label: 'Nerve blocks', href: '/services/nerve-blocks' },
+            { label: 'Nerve hydrodissection', href: '/services/nerve-hydrodissection' },
+          ],
+        },
+        {
+          title: 'Botox', href: '/services/botox',
+          items: [
+            { label: 'Botox for pain', href: '/services/botox' },
+            { label: 'Botox for migraine & spasms', href: '/services/botox-migraine-spasms' },
+          ],
+        },
+        {
+          title: 'Regenerative medicine', href: '/services/regenerative-medicine',
+          items: [
+            { label: 'PRP (platelet-rich plasma)', href: '/services/prp' },
+            { label: 'BMAC (bone marrow)', href: '/services/bmac' },
+            { label: 'A2M (alpha-2-macroglobulin)', href: '/services/a2m' },
+            { label: 'Hyaluronic acid', href: '/services/hyaluronic-acid' },
+          ],
+        },
+        {
+          title: 'Joint & soft tissue', href: '/services#joint-and-soft-tissue',
+          items: [
+            { label: 'Joint injections', href: '/services/joint-injections' },
+            { label: 'Bursa injections', href: '/services/bursa-injections' },
+            { label: 'Tendon injections', href: '/services/tendon-injections' },
+            { label: 'Trigger point injections', href: '/services/trigger-point-injections' },
+          ],
+        },
+      ],
       children: [
         { label: 'Back Pain', href: '/services/back-pain', text: 'Spine, disc and nerve pain' },
         { label: 'Neck Pain', href: '/services/neck-pain', text: 'Stiffness, strain and nerve symptoms' },
