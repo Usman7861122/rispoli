@@ -63,6 +63,30 @@ export const meetTeam = {
     ] as { src: string; alt: string; position: string; size?: 'big' | 'wide' }[],
   },
 
+  // Photos for the 3D scrolling gallery (4 columns, filled in order).
+  parallaxPhotos: [
+    { src: '/images/meet/team-all.jpg', alt: 'Providers and office team sitting together on garden steps', position: '50% 30%' },
+    { src: '/images/meet/duo-1.jpg', alt: 'Two members of the care team in blue scrubs, smiling with arms around each other', position: '50% 22%' },
+    { src: '/images/meet/britney-2.jpg', alt: 'Britney Castillo smiling in pink scrubs', position: '50% 22%' },
+    { src: '/images/team/mehta-about.jpg', alt: 'Dr. Natasha Mehta in her white coat, smiling', position: '50% 24%' },
+    { src: '/images/team/hattenbach-about.jpg', alt: 'Dr. Jacob Hattenbach in his white coat', position: '50% 22%' },
+    { src: '/images/meet/kim-2.jpg', alt: 'Kim Mendieta smiling in pink scrubs', position: '50% 22%' },
+    { src: '/images/meet/team-group-2.jpg', alt: 'The five providers standing together in front of a green hedge', position: '50% 40%' },
+    { src: '/images/team/phan-about.jpg', alt: 'Jamie Phan, PA-C, in her white coat', position: '50% 24%' },
+    { src: '/images/meet/duo-2.jpg', alt: 'Two members of the care team standing together in blue scrubs', position: '50% 22%' },
+    { src: '/images/team/vlachos-about.jpg', alt: 'Dr. Katrina Vlachos in her white coat', position: '50% 24%' },
+    { src: '/images/rispoli/coat.jpg', alt: 'Dr. Leia Rispoli in her white coat, smiling', position: '50% 26%' },
+    { src: '/images/meet/duo-3.jpg', alt: 'Two members of the care team laughing and posing in blue scrubs', position: '50% 22%' },
+    { src: '/images/meet/britney.jpg', alt: 'Britney Castillo in pink scrubs', position: '50% 22%' },
+    { src: '/images/team/mehta-hero.jpg', alt: 'Dr. Natasha Mehta in blue scrubs', position: '50% 22%' },
+    { src: '/images/meet/kim.jpg', alt: 'Kim Mendieta in pink scrubs', position: '50% 22%' },
+    { src: '/images/team/hattenbach-hero.jpg', alt: 'Dr. Jacob Hattenbach in navy scrubs', position: '50% 22%' },
+    { src: '/images/rispoli/scrubs-2.jpg', alt: 'Dr. Leia Rispoli laughing in blue scrubs', position: '50% 26%' },
+    { src: '/images/team/vlachos-hero.jpg', alt: 'Dr. Katrina Vlachos smiling in her white coat', position: '50% 24%' },
+    { src: '/images/rispoli/coat-2.jpg', alt: 'Dr. Leia Rispoli standing in her white coat', position: '50% 24%' },
+    { src: '/images/team/phan-hero.jpg', alt: 'Jamie Phan, PA-C, in navy scrubs', position: '50% 22%' },
+  ] as { src: string; alt: string; position: string }[],
+
   cta: {
     title: 'Come and meet us.',
     accent: 'meet us.',
