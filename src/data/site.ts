@@ -62,7 +62,7 @@ export const site = {
       // Treatments from the three location pages, merged and grouped. Each treatment appears once.
       groups: [
         {
-          title: 'Spine injections', href: '/services#spine-injections',
+          title: 'Spine injections', href: '/services/spine-injections',
           items: [
             { label: 'Epidural steroid injections', href: '/services/epidural-steroid-injections' },
             { label: 'Facet joint injections', href: '/services/facet-joint-injections' },

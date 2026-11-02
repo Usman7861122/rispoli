@@ -403,3 +403,100 @@ export function ServiceRelated({ items }: { items: { label: string; href: string
   );
 }
 
+
+/* ---------- Hub: list of treatments in one group ---------- */
+export type HubItem = {
+  slug: string; name: string; short: string; bestFor: string; time: string;
+  image: string; fallback: string; position: string; alt: string; href: string;
+};
+
+export function HubTreatments({ eyebrow, title, accent, text, items }: { eyebrow: string; title: string; accent: string; text: string; items: HubItem[] }) {
+  const fade = useFade();
+  return (
+    <section id="treatments" className="scroll-mt-28 bg-mist py-20 lg:py-28" aria-label="Treatments">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+        <Head eyebrow={eyebrow} title={title} accent={accent} text={text} />
+        <ul className="mt-12 grid gap-6 md:grid-cols-2">
+          {items.map((it, i) => (
+            <motion.li key={it.slug} {...fade((i % 2) * 0.08)} className="group flex flex-col overflow-hidden rounded-xl bg-white p-3 shadow-sm ring-1 ring-navy/10 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:flex-row">
+              <a href={it.href} aria-label={it.name} className="block shrink-0 overflow-hidden rounded-xl sm:w-[42%]">
+                <FallbackImg src={it.image} fallback={it.fallback} alt={it.alt} loading="lazy" className="aspect-square w-full object-cover transition-transform duration-700 group-hover:scale-105" style={{ objectPosition: it.position }} />
+              </a>
+              <span className="flex flex-1 flex-col px-4 pb-4 pt-5 sm:pl-6">
+                <a href={it.href} className="font-display text-[28px] leading-tight text-navy-deep transition-colors hover:text-palm">{it.name}</a>
+                <span className="mt-3 text-[17px] leading-relaxed text-slate">{it.short}</span>
+                <span className="mt-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm">Often used for</span>
+                <span className="mt-1 text-[16px] leading-snug text-navy-deep">{it.bestFor}</span>
+                <span className="mt-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm">Visit time</span>
+                <span className="mt-1 text-[16px] leading-snug text-navy-deep">{it.time}</span>
+                <span className="mt-auto pt-6">
+                  <a href={it.href} className="inline-flex rounded-full bg-palm px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-navy-deep">Learn more</a>
+                </span>
+              </span>
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Hub: quick guide ("Which one fits?") ---------- */
+export function HubGuide({ eyebrow, title, accent, text, rows, note }: { eyebrow: string; title: string; accent: string; text: string; rows: { pain: string; where: string; label: string; href: string }[]; note: string }) {
+  const fade = useFade();
+  return (
+    <section className="bg-white py-20 text-navy-deep lg:py-28" aria-label="Which treatment fits">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+        <Head eyebrow={eyebrow} title={title} accent={accent} text={text} />
+        <ul className="mt-12 grid gap-4 md:grid-cols-2">
+          {rows.map((r, i) => (
+            <motion.li key={r.pain} {...fade((i % 2) * 0.08)} className="flex flex-col gap-4 rounded-xl border border-navy/10 bg-mist p-6 sm:flex-row sm:items-center sm:justify-between">
+              <span>
+                <span className="block font-display text-[24px] leading-snug">{r.pain}</span>
+                <span className="mt-1 block text-[16px] text-slate">{r.where}</span>
+              </span>
+              <a href={r.href} className={`${btnGhostLight} shrink-0`}>{r.label}</a>
+            </motion.li>
+          ))}
+        </ul>
+        <p className="mt-8 max-w-[70ch] text-[16px] leading-relaxed text-slate">{note}</p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Hub: offices, with a button per treatment ---------- */
+export function HubOffices({ title, accent, text, offices, bookingUrl, phone }: {
+  title: string; accent: string; text: string; bookingUrl: string; phone: string;
+  offices: { slug: string; city: string; street: string; cityLine: string; image: string; position: string; links: { label: string; href: string }[] }[];
+}) {
+  const fade = useFade();
+  return (
+    <section id="locations" className="scroll-mt-28 bg-palm-soft py-20 lg:py-28" aria-label="Locations">
+      <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
+        <Head eyebrow="Where we treat" title={title} accent={accent} text={text} />
+        <ul className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {offices.map((o, i) => (
+            <motion.li key={o.slug} {...fade(i * 0.08)} className="flex flex-col rounded-xl bg-white p-3 shadow-sm ring-1 ring-navy/10">
+              <img src={o.image} alt={`${o.city} office`} loading="lazy" className="aspect-square w-full rounded-xl object-cover" style={{ objectPosition: o.position }} />
+              <span className="flex flex-1 flex-col px-3 pb-3 pt-5">
+                <span className="font-display text-[28px] leading-tight text-navy-deep">{o.city}</span>
+                <address className="mt-2 text-[16px] not-italic leading-relaxed text-slate">{o.street}<br />{o.cityLine}</address>
+                <span className="mt-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm">Spine injections in {o.city}</span>
+                <span className="mt-3 flex flex-wrap gap-2">
+                  {o.links.map((l) => (
+                    <a key={l.href} href={l.href} className="rounded-full border border-navy/25 px-4 py-2 text-[12px] font-semibold tracking-[0.06em] text-navy transition-colors duration-300 hover:bg-navy hover:text-white">{l.label}</a>
+                  ))}
+                </span>
+                <span className="mt-6 flex flex-wrap gap-3">
+                  <a href={bookingUrl} target="_blank" rel="noopener" className="rounded-full bg-palm px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-white transition-colors duration-300 hover:bg-navy-deep">Book here</a>
+                </span>
+              </span>
+            </motion.li>
+          ))}
+        </ul>
+        <div className="mt-10"><a href={tel(phone)} className={btnGhostLight}>Call {phone}</a></div>
+      </div>
+    </section>
+  );
+}
