@@ -6,7 +6,11 @@ export const drRispoli = {
   seoDescription: 'Dr. Leia Rispoli is a double board-certified interventional pain medicine physician at Westside Interventional Pain & Physiatry. Non-surgical care for back, neck, joint and pelvic pain.',
 
   photos: [
-    { src: '/images/team/rispoli.jpg', alt: 'Dr. Leia Rispoli smiling in royal-blue scrubs', position: '50% 18%' },
+    { src: '/images/rispoli/hero.jpg', alt: 'Dr. Leia Rispoli smiling in royal-blue scrubs, sitting in front of a green hedge', position: '50% 24%' },
+    { src: '/images/rispoli/coat.jpg', alt: 'Dr. Leia Rispoli in her white coat, smiling', position: '50% 26%' },
+    { src: '/images/rispoli/coat-2.jpg', alt: 'Dr. Leia Rispoli standing in her white coat', position: '50% 24%' },
+    { src: '/images/rispoli/scrubs-2.jpg', alt: 'Dr. Leia Rispoli laughing in blue scrubs', position: '50% 26%' },
+    { src: '/images/rispoli/scrubs-3.jpg', alt: 'Dr. Leia Rispoli in blue scrubs with her hands together', position: '50% 24%' },
   ] as { src: string; alt: string; position: string }[],
 
   hero: {
