@@ -20,6 +20,10 @@ const legal = [
   { label: 'Articles', href: '/blog' },
   { label: 'Privacy Policy', href: '/privacy' },
   { label: 'Terms & Conditions', href: '/terms-conditions' },
+  { label: 'Notice of Privacy Practices', href: '/notice-of-privacy-practices' },
+  { label: 'Cookie Policy', href: '/cookie-policy' },
+  { label: 'Accessibility', href: '/accessibility' },
+  { label: 'Medical Disclaimer', href: '/medical-disclaimer' },
 ];
 const mask = `-webkit-mask-image:url(${palm.src});mask-image:url(${palm.src});-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;`;
 const btn = 'group relative inline-flex items-center gap-3 overflow-hidden rounded-full px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.2em]';
@@ -110,7 +114,11 @@ const link = 'inline-block py-1.5 text-[16px] text-white/75 transition-colors du
       <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
       <ul class="flex flex-wrap gap-x-6 gap-y-1">
         {legal.map((l) => <li><a href={l.href} class="transition-colors hover:text-white">{l.label}</a></li>)}
+        <li><button type="button" id="open-cookie-settings" class="transition-colors hover:text-white">Cookie settings</button></li>
       </ul>
     </div>
   </div>
 </footer>
+<script>
+  document.getElementById('open-cookie-settings')?.addEventListener('click', () => window.dispatchEvent(new CustomEvent('wipp:open-cookie-settings')));
+</script>

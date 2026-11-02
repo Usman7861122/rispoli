@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SimpleHero, BlogArticle, fmtDate } from '../../components/react/PageBlocks';
+import { blogPosts } from '../../data/blog-posts';
+import { allServices } from '../../data/service-pages';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return blogPosts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+const { post } = Astro.props;
+const services = post.relatedServices
+  .map((s) => allServices.find((x) => x.slug === s))
+  .filter(Boolean)
+  .map((s: any) => ({ label: s.hero.name.replace(/^The /, ''), href: `/services/${s.slug}` }));
+const more = [...blogPosts].filter((p) => p.slug !== post.slug).sort((a, b) => (a.category === post.category ? -1 : 1) - (b.category === post.category ? -1 : 1) || b.date.localeCompare(a.date)).slice(0, 3);
+const url = new URL(`/blog/${post.slug}`, Astro.site).toString();
+const ld = [
+  { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: post.title, description: post.metaDescription, datePublished: post.date, image: new URL(post.image, Astro.site).toString(), mainEntityOfPage: url, publisher: { '@type': 'Organization', name: site.name } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: post.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+---
+<BaseLayout title={post.title} description={post.metaDescription}>
+  <SimpleHero client:load eyebrow={post.category} title={post.title} meta={[fmtDate(post.date), `${post.readTime} read`]} />
+  <BlogArticle client:load post={post} services={services} more={more} bookingUrl={site.bookingUrl} phone={site.phone} />
+  {ld.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
+</BaseLayout>

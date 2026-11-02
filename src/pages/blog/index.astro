@@ -1,5 +1,10 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
-import Blog from '../../components/sections/Blog.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SimpleHero, BlogBrowser } from '../../components/react/PageBlocks';
+import { blogPosts } from '../../data/blog-posts';
+const posts = [...blogPosts].sort((a, b) => b.date.localeCompare(a.date));
 ---
-<PageLayout title="Blog" eyebrow="Learn" lede="Simple guides on pain and recovery."><Blog /></PageLayout>
+<BaseLayout title="Pain Care Blog" description="Simple, doctor-written guides on back pain, injections, headaches and healthy habits from Westside Interventional Pain & Physiatry.">
+  <SimpleHero client:load eyebrow="Learn" title="Simple guides to pain and recovery." accent="pain and recovery." lede="Easy-to-read articles from our doctors, so you know what to expect." />
+  <BlogBrowser client:load posts={posts} />
+</BaseLayout>

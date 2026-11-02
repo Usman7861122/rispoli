@@ -1,16 +1,16 @@
 ---
 import Section from '../ui/Section.astro';
-import { site } from '../../data/site';
+import { blogPosts } from '../../data/blog-posts';
 interface Props { limit?: number }
 const { limit } = Astro.props;
-const posts = [...site.posts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, limit);
+const posts = [...blogPosts].sort((a, b) => b.date.localeCompare(a.date)).slice(0, limit);
 ---
 <Section id="blog">
   <h2 class="font-display text-3xl md:text-4xl">From the blog</h2>
   <ul class="mt-10 grid gap-6 md:grid-cols-3">
     {posts.map((p) => (
       <li>
-        <a href={p.href} class="block">
+        <a href={`/blog/${p.slug}`} class="block">
           <p class="text-xs uppercase tracking-widest text-ink/50">{p.category} · {p.readTime}</p>
           <h3 class="mt-2 text-xl font-medium">{p.title}</h3>
           <p class="mt-2 text-ink/70">{p.excerpt}</p>

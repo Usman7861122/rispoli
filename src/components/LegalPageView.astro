@@ -1,0 +1,15 @@
+---
+// Shared by /privacy, /terms-conditions, /accessibility, /cookie-policy, /notice-of-privacy-practices and /medical-disclaimer.
+// Text lives in src/data/legal-pages.ts. All legal text is a draft for attorney review.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SimpleHero, LegalDoc } from './react/PageBlocks';
+import { legalPages } from '../data/legal-pages';
+import { site } from '../data/site';
+interface Props { slug: string }
+const page = legalPages.find((p) => p.slug === Astro.props.slug)!;
+const others = legalPages.filter((p) => p.slug !== page.slug).map((p) => ({ title: p.title, href: `/${p.slug}` }));
+---
+<BaseLayout title={page.title} description={page.seoDescription}>
+  <SimpleHero client:load eyebrow="Legal" title={page.title} lede={page.seoDescription} meta={[`Updated ${page.updated}`]} />
+  <LegalDoc client:load page={page} others={others} phone={site.phone} email={site.email} />
+</BaseLayout>

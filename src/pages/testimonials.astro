@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SimpleHero, TestimonialWall } from '../components/react/PageBlocks';
+import { testimonials } from '../data/testimonials';
+import { site } from '../data/site';
+---
+<BaseLayout title="Patient Reviews" description="Read what patients say about their care at Westside Interventional Pain & Physiatry in Santa Monica, Marina Del Rey and Newport Beach.">
+  <SimpleHero client:load eyebrow="Patient stories" title="Patients in their own words." accent="own" lede="Real reviews from people we have cared for across our three offices." actions={[{ label: 'Book appointment', href: site.bookingUrl, external: true, primary: true }, { label: 'Contact us', href: '/contact' }]} />
+  <TestimonialWall client:load items={testimonials.items as any} bookingUrl={site.bookingUrl} phone={site.phone} />
+</BaseLayout>

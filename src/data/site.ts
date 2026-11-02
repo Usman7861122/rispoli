@@ -11,7 +11,7 @@ export const site = {
   locations: ['Marina Del Rey', 'Newport Beach', 'Santa Monica'], // all three confirmed on leiarispolimd.com
   hours: [{ days: 'Mon - Fri', time: '8:00 AM - 5:00 PM' }],
   bookingUrl: 'https://lrnmmedical.com/appointment/', // TODO: confirm new booking link // single source of truth for every Book button
-  contactApi: '/api/contact',
+  contactApi: '', // TODO: paste a form service URL (Formspree, Basin, etc.). Empty = the form opens the visitor's email app.
   social: { linkedin: '', instagram: '', facebook: '', x: '' }, // old site icons have no real links yet
   // Thin bar above the header (old site shows this notice with an Appointment button and the phone number).
   topBar: {
