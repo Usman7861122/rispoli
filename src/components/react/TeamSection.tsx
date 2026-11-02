@@ -80,7 +80,7 @@ function Card({ p, lead, i, offset }: { p: Provider; lead?: boolean; i: number; 
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.75, ease: EASE, delay: (i % 3) * 0.1 }}
     >
-      <a href="/about" className="group flex h-full flex-col rounded-xl bg-white p-3 shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/5 transition-shadow duration-500 hover:shadow-[0_40px_70px_-34px_rgba(10,27,61,0.55)]">
+      <a href={p.href} className="group flex h-full flex-col rounded-xl bg-white p-3 shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/5 transition-shadow duration-500 hover:shadow-[0_40px_70px_-34px_rgba(10,27,61,0.55)]">
         <Photo p={p} ratio={lead ? 'aspect-[4/4.6]' : 'aspect-square'} />
         <div className={`flex flex-1 flex-col ${lead ? 'px-4 pb-5 pt-6 lg:px-6 lg:pb-7' : 'px-3 pb-4 pt-5 lg:px-4'}`}>
           <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-palm">{p.role}</p>

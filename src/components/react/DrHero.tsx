@@ -38,7 +38,7 @@ export default function DrHero({ data, photo, bookingUrl, phone }: Props) {
 
           <motion.ul {...fade(0.24)} className="mt-8 flex flex-wrap gap-3">
             {data.chips.map((c) => (
-              <li key={c} className="rounded-full border border-white/25 bg-white/5 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-white/90">{c}</li>
+              <li key={c} className="cursor-default rounded-full border border-white/25 bg-white/5 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-white/90 transition-all duration-300 hover:-translate-y-1 hover:border-palm hover:bg-palm hover:text-white hover:shadow-lg hover:shadow-palm/40">{c}</li>
             ))}
           </motion.ul>
 

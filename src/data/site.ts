@@ -33,6 +33,7 @@ export const site = {
       },
       children: [
         { label: 'Dr. Rispoli', href: '/dr-rispoli', text: 'Interventional pain & physical medicine', image: '/images/team/rispoli.jpg', position: '50% 20%' },
+        { label: 'Dr. Mehta', href: '/dr-mehta', text: 'PM&R & traumatic brain injury', image: '/images/team/mehta-hero.jpg', position: '50% 20%' },
         { label: 'Meet The Team', href: '/meet-the-team', text: 'Doctors, PA and office staff', image: '/images/about/team.jpg', position: '50% 40%' },
       ],
     },

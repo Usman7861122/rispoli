@@ -8,6 +8,7 @@ export interface Provider {
   imageAlt: string;
   position: string;    // CSS object-position
   tags: string[];      // small chips on the photo
+  href: string;        // inner page
   bio?: string[];      // only the two lead providers have full bios on the old site
   focus?: string;      // one short line for the other providers
 }
@@ -21,6 +22,7 @@ export const team = {
   lead: [
     {
       slug: 'leia-rispoli',
+      href: '/dr-rispoli',
       name: 'Leia Rispoli, MD',
       role: 'PM&R · Interventional Pain',
       image: '/images/team/rispoli.jpg',
@@ -34,6 +36,7 @@ export const team = {
     },
     {
       slug: 'natasha-mehta',
+      href: '/dr-mehta',
       name: 'Natasha Mehta, MD',
       role: 'PM&R · Brain Injury Medicine',
       image: '/images/team/mehta.jpg',
@@ -49,6 +52,7 @@ export const team = {
   peers: [
     {
       slug: 'jacob-hattenbach',
+      href: '/dr-hattenbach',
       name: 'Jacob Hattenbach, DO',
       role: 'PM&R · Interventional Spine',
       image: '/images/team/hattenbach.jpg',
@@ -59,6 +63,7 @@ export const team = {
     },
     {
       slug: 'jamie-phan',
+      href: '/jamie-phan',
       name: 'Jamie Phan, PA-C',
       role: 'Physician Assistant',
       image: '/images/team/phan.jpg',
@@ -69,6 +74,7 @@ export const team = {
     },
     {
       slug: 'katrina-vlachos',
+      href: '/dr-vlachos',
       name: 'Katrina Vlachos, MD',
       role: 'PM&R · EMG/NCS',
       image: '/images/team/vlachos.jpg',

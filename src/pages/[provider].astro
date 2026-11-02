@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import DrHero from '../components/react/DrHero';
+import DrAbout from '../components/react/DrAbout';
+import EducationPath from '../components/react/EducationPath';
+import TeamLinks from '../components/react/TeamLinks';
+import DrCta from '../components/react/DrCta';
+import { providers, teamLinks } from '../data/providers';
+import { site } from '../data/site';
+
+export function getStaticPaths() {
+  return providers.map((p) => ({ params: { provider: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+---
+<BaseLayout title={p.seoTitle} description={p.seoDescription}>
+  <DrHero client:load data={p.hero} photo={p.photos[0]} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <DrAbout client:visible about={p.about} focus={p.focus} photos={p.photos} />
+  <EducationPath client:visible data={p.education} />
+  <TeamLinks client:visible cards={teamLinks} current={p.slug} />
+  <DrCta client:visible data={p.cta} bookingUrl={site.bookingUrl} phone={site.phone} />
+</BaseLayout>
