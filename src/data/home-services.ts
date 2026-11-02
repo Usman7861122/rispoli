@@ -18,6 +18,5 @@ export const homeServices = {
     { slug: 'joint-pain', title: 'Joint Pain', text: 'Expert solutions to reduce inflammation, restore flexibility, and enhance joint movement without surgery.', image: '/images/services/joint-pain.jpg', imageAlt: 'Woman holding her painful knee', position: '50% 55%' },
     { slug: 'pelvic-pain', title: 'Pelvic Pain', text: 'Dr. Leia Rispoli offers advanced, non-surgical treatments for complex pelvic pain in men and women.', image: '/images/services/pelvic-pain.jpg', imageAlt: 'Person holding their lower belly with the painful area highlighted', position: '50% 40%' },
     { slug: 'spinal-cord-stimulation', title: 'Spinal Cord Stimulation', text: 'An advanced option for chronic pain that has not eased, using gentle electrical pulses to calm nerve pain.', image: '/images/services/spinal-cord-stimulation.jpg', imageAlt: 'Person with back pain, spine area highlighted', position: '50% 40%' }, // TODO: replace with a spinal cord stimulation photo
-    { slug: 'sports-injury', title: 'Sports Injury', text: 'Careful exams and guided, non-surgical care to help you heal and get back to the sport you love.', image: '/images/services/sports-injury.jpg', imageAlt: 'Runner stopping mid-run with knee pain', position: '50% 40%' },
   ] as HomeService[],
 };

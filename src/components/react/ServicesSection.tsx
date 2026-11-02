@@ -23,7 +23,7 @@ function Arrow() {
   );
 }
 
-function Card({ s, i }: { s: HomeService; i: number }) {
+function Card({ s, i, wide }: { s: HomeService; i: number; wide: boolean }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLImageElement>(null);
   const [missing, setMissing] = useState(false);
@@ -35,7 +35,7 @@ function Card({ s, i }: { s: HomeService; i: number }) {
 
   return (
     <motion.li
-      className={tall ? 'lg:row-span-2' : ''}
+      className={`${tall ? 'xl:row-span-2' : ''} ${wide ? 'sm:col-span-2 xl:col-span-1' : ''}`}
       initial={reduce ? false : { opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
@@ -107,7 +107,7 @@ export default function ServicesSection({ data, bookingUrl }: Props) {
         </div>
 
         <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:mt-20 xl:grid-cols-4">
-          {data.items.map((s, i) => <Card key={s.slug} s={s} i={i} />)}
+          {data.items.map((s, i) => <Card key={s.slug} s={s} i={i} wide={i === data.items.length - 1 && data.items.length % 2 === 1} />)}
         </ul>
 
         {/* Call to action */}
