@@ -61,6 +61,7 @@ export const esi = {
       { title: 'Caudal', text: 'The medicine enters through the base of the spine. It is a gentle option for the lower spine, and it can help after earlier back surgery.' },
     ],
     areas: ['Lower back (lumbar)', 'Neck (cervical)', 'Mid back (thoracic)'],
+    areasLabel: 'Spine areas we treat',
   },
 
   candidates: {

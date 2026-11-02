@@ -1,0 +1,15 @@
+---
+// City versions of /services/intracept-procedure.
+import ServicePageView from '../../../components/ServicePageView.astro';
+import { intracept } from '../../../data/intracept-procedure';
+import { locations } from '../../../data/locations';
+
+export function getStaticPaths() {
+  return intracept.locationSlugs.map((slug) => ({
+    params: { city: slug },
+    props: { office: locations.offices.find((o) => o.slug === slug)! },
+  }));
+}
+const { office } = Astro.props;
+---
+<ServicePageView d={intracept} office={office} />

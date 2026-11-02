@@ -1,0 +1,15 @@
+---
+// City versions of /services/facet-joint-injections.
+import ServicePageView from '../../../components/ServicePageView.astro';
+import { facet } from '../../../data/facet-joint-injections';
+import { locations } from '../../../data/locations';
+
+export function getStaticPaths() {
+  return facet.locationSlugs.map((slug) => ({
+    params: { city: slug },
+    props: { office: locations.offices.find((o) => o.slug === slug)! },
+  }));
+}
+const { office } = Astro.props;
+---
+<ServicePageView d={facet} office={office} />

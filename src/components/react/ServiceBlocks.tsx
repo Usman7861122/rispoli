@@ -176,7 +176,7 @@ export function ServiceIntro({ facts, what, local }: {
 
 /* ---------- Routes (approaches) ---------- */
 export function ServiceApproaches({ data }: {
-  data: { eyebrow: string; title: string; accent: string; text: string; items: { title: string; text: string }[]; areas: string[] };
+  data: { eyebrow: string; title: string; accent: string; text: string; items: { title: string; text: string }[]; areas: string[]; areasLabel?: string };
 }) {
   const fade = useFade();
   return (
@@ -194,7 +194,7 @@ export function ServiceApproaches({ data }: {
           ))}
         </ul>
         <motion.ul {...fade(0.2)} className="mt-10 flex flex-wrap items-center gap-3">
-          <li className="mr-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-palm-soft">Spine areas we treat</li>
+          <li className="mr-2 text-[12px] font-semibold uppercase tracking-[0.2em] text-palm-soft">{data.areasLabel ?? 'Spine areas we treat'}</li>
           {data.areas.map((a) => (
             <li key={a} className="cursor-default rounded-full border border-white/25 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-white/90 transition-colors duration-300 hover:border-palm hover:bg-palm">{a}</li>
           ))}
