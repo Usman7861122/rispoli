@@ -1,0 +1,22 @@
+---
+// One page per office: /locations/santa-monica, /locations/marina-del-rey, /locations/newport-beach.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ServiceHero, ServiceProviders } from '../../components/react/ServiceBlocks';
+import { LocVisit, LocServices, LocOthers } from '../../components/react/LocationBlocks';
+import { locations } from '../../data/locations';
+import { locationPage, hours } from '../../data/location-pages';
+import { site } from '../../data/site';
+
+export function getStaticPaths() {
+  return locations.offices.map((o) => ({ params: { city: o.slug } }));
+}
+const d = locationPage(Astro.params.city!);
+const o = d.office;
+---
+<BaseLayout title={d.seoTitle} description={d.seoDescription}>
+  <ServiceHero client:load data={d.hero} photo={d.photo} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <LocVisit client:load city={o.city} street={o.street} cityLine={o.cityLine} phone={d.contact.phone} fax={d.contact.fax} email={d.contact.email} hours={hours} directions={d.directions} mapEmbed={d.mapEmbed} bookingUrl={site.bookingUrl} />
+  <LocServices client:visible city={o.city} count={d.serviceCount} groups={d.serviceGroups} />
+  <ServiceProviders client:visible title={`Doctors in ${o.city}.`} accent={`${o.city}.`} text={`These providers see patients at our ${o.city} office. Tap a card to read about their training.`} cards={d.doctors} />
+  <LocOthers client:visible offices={d.others} />
+</BaseLayout>

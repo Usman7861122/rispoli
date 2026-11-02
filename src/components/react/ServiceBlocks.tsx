@@ -5,7 +5,7 @@ import PalmWatermark from './PalmWatermark';
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 // Shows `fallback` when `src` is missing. Checks after hydration too, because the error can fire before React attaches onError.
-function FallbackImg({ src, fallback, ...rest }: { src: string; fallback: string } & React.ImgHTMLAttributes<HTMLImageElement>) {
+export function FallbackImg({ src, fallback, ...rest }: { src: string; fallback: string } & React.ImgHTMLAttributes<HTMLImageElement>) {
   const ref = useRef<HTMLImageElement>(null);
   const [cur, setCur] = useState(src);
   useEffect(() => {
@@ -15,7 +15,7 @@ function FallbackImg({ src, fallback, ...rest }: { src: string; fallback: string
   return <img ref={ref} src={cur} onError={() => cur !== fallback && setCur(fallback)} {...rest} />;
 }
 
-function useFade() {
+export function useFade() {
   const reduce = useReducedMotion();
   return (delay = 0) => ({
     initial: reduce ? false : { opacity: 0, y: 24 },
@@ -38,7 +38,7 @@ function Title({ text, accent, dark }: { text: string; accent: string; dark?: bo
   );
 }
 
-function Head({ eyebrow, title, accent, text, dark }: { eyebrow: string; title: string; accent: string; text?: string; dark?: boolean }) {
+export function Head({ eyebrow, title, accent, text, dark }: { eyebrow: string; title: string; accent: string; text?: string; dark?: boolean }) {
   const fade = useFade();
   return (
     <div className="max-w-3xl">
@@ -53,10 +53,10 @@ function Head({ eyebrow, title, accent, text, dark }: { eyebrow: string; title: 
   );
 }
 
-const btnPrimary = 'group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-palm px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.2em] text-white';
-const btnGhostDark = 'inline-flex items-center rounded-full border border-white/40 px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-white hover:text-navy';
-const btnGhostLight = 'inline-flex items-center rounded-full border border-navy/30 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-navy transition-colors duration-300 hover:bg-navy hover:text-white';
-const tel = (p: string) => `tel:${p.replace(/[^\d+]/g, '')}`;
+export const btnPrimary = 'group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-palm px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.2em] text-white';
+export const btnGhostDark = 'inline-flex items-center rounded-full border border-white/40 px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.2em] text-white transition-colors duration-300 hover:bg-white hover:text-navy';
+export const btnGhostLight = 'inline-flex items-center rounded-full border border-navy/30 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-navy transition-colors duration-300 hover:bg-navy hover:text-white';
+export const tel = (p: string) => `tel:${p.replace(/[^\d+]/g, '')}`;
 
 /* ---------- Hero ---------- */
 export function ServiceHero({ data, photo, bookingUrl, phone }: {
