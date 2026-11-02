@@ -9,7 +9,7 @@
   --color-navy-deep: #0a1b3d;
   --color-palm: #2d6133; /* exact green of the palm in the logo */
   --color-palm-soft: #e5eee7;
-  --color-palm-bright: #5cb86a; /* readable green for text on dark navy (the exact logo green is too dark there) */
+  --color-palm-bright: #2d6134; /* city name on dark hero, exact green chosen by the client */
   --color-palm-light: #2d6133; /* same logo green */
   --color-mist: #f3f5f7;
   --color-slate: #5b6472;
