@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import logoColor from '../../assets/logo-mark.png';
-import logoWhite from '../../assets/logo-mark-white.png';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import lettersColor from '../../assets/logo-letters.png';
+import lettersWhite from '../../assets/logo-letters-white.png';
+import palmLayer from '../../assets/logo-palm.png';
 
 // Astro turns an imported image into an object with a .src link
 const url = (img: unknown) => (typeof img === 'string' ? img : (img as { src: string }).src);
@@ -17,6 +18,37 @@ interface Props {
   bookingUrl: string;
   phone: string;
   topBar?: { message: string; cta: { label: string; href: string } };
+}
+
+
+/* Logo intro: the letters appear first, then the palm tree drops in from above and settles on the "I" */
+function AnimatedLogo({ solid, small }: { solid: boolean; small: boolean }) {
+  const reduce = useReducedMotion();
+  return (
+    <span className={`relative inline-block shrink-0 transition-[height] duration-300 ${small ? 'h-8' : 'h-10'}`} style={{ aspectRatio: '546 / 231' }}>
+      <motion.img
+        src={url(solid ? lettersColor : lettersWhite)}
+        alt=""
+        width={546}
+        height={231}
+        className="absolute inset-0 h-full w-full"
+        initial={reduce ? false : { opacity: 0, clipPath: 'inset(0 100% 0 0)' }}
+        animate={{ opacity: 1, clipPath: 'inset(0 0% 0 0)' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      />
+      <motion.img
+        src={url(palmLayer)}
+        alt=""
+        width={546}
+        height={231}
+        className="absolute inset-0 h-full w-full"
+        style={{ transformOrigin: '50% 100%' }}
+        initial={reduce ? false : { opacity: 0, y: -90, rotate: -8 }}
+        animate={{ opacity: 1, y: 0, rotate: 0 }}
+        transition={{ delay: 0.8, type: 'spring', stiffness: 230, damping: 11, mass: 0.9, opacity: { duration: 0.15, delay: 0.8 } }}
+      />
+    </span>
+  );
 }
 
 /* Clear over the hero photo, turns white after you scroll */
@@ -76,13 +108,7 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
       )}
       <div className={`mx-auto flex max-w-[1400px] items-center justify-between px-6 transition-[height] duration-300 lg:px-12 ${scrolled ? 'h-[68px]' : 'h-[88px]'}`}>
         <a href="/" aria-label="Westside Interventional Pain & Physiatry, home" className="flex items-center gap-4">
-          <img
-            src={url(solid ? logoColor : logoWhite)}
-            alt=""
-            width={546}
-            height={231}
-            className={`w-auto transition-[height] duration-300 ${scrolled ? 'h-8' : 'h-10'}`}
-          />
+          <AnimatedLogo solid={solid} small={scrolled} />
           <span aria-hidden="true" className={`h-9 w-px ${solid ? 'bg-navy/20' : 'bg-white/30'}`} />
           <span className="leading-none">
             <span className={`block text-[10px] font-semibold uppercase tracking-[0.34em] ${solid ? 'text-navy' : 'text-white/85'}`}>Westside</span>
