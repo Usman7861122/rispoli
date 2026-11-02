@@ -179,7 +179,7 @@ export function ServiceApproaches({ data }: {
 /* ---------- Who it helps ---------- */
 export function ServiceCandidates({ data, photo }: {
   data: { eyebrow: string; title: string; accent: string; conditionsTitle: string; conditions: string[]; symptomsTitle: string; symptoms: string[]; note: string };
-  photo: { src: string; alt: string; position: string };
+  photo: { src: string; fallback: string; alt: string; position: string };
 }) {
   const fade = useFade();
   const List = ({ title, items }: { title: string; items: string[] }) => (
@@ -201,7 +201,7 @@ export function ServiceCandidates({ data, photo }: {
           <Head eyebrow={data.eyebrow} title={data.title} accent={data.accent} />
           <motion.figure {...fade(0.2)} className="relative mt-10 max-w-[460px]">
             <span aria-hidden="true" className="absolute -bottom-3 -right-3 h-full w-full rounded-xl border border-palm" />
-            <img src={photo.src} alt={photo.alt} loading="lazy" className="relative aspect-square w-full rounded-xl object-cover" style={{ objectPosition: photo.position }} />
+            <FallbackImg src={photo.src} fallback={photo.fallback} alt={photo.alt} loading="lazy" className="relative aspect-square w-full rounded-xl object-cover" style={{ objectPosition: photo.position }} />
           </motion.figure>
         </div>
         <div className="flex flex-col gap-5">

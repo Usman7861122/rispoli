@@ -1,7 +1,8 @@
 // Content for /services/epidural-steroid-injections.
 // Written in plain English for patients. Medical wording and "who offers it where" need the practice's review.
-// Photo: Shutterstock (licensed on the practice's Unlimited plan, asset 2576083921). Save the file as
-// public/images/services/esi/spine-model.jpg. Until it exists the page shows the fallback photo.
+// Two Shutterstock photos (practice's Unlimited plan, standard license), saved in public/images/services/esi/:
+//   spine-model.jpg = asset 2576083921 (hero), doctor-back.jpg = asset 2570037715 (who it helps).
+// Until a file exists the page shows its fallback photo.
 
 export const esi = {
   slug: 'epidural-steroid-injections',
@@ -16,9 +17,10 @@ export const esi = {
     position: '50% 50%',
   },
   sidePhoto: {
-    src: '/images/services/back-pain.jpg',
-    alt: 'Person holding their lower back where a spine nerve is irritated',
-    position: '72% 50%',
+    src: '/images/services/esi/doctor-back.jpg',
+    fallback: '/images/services/back-pain.jpg',
+    alt: 'Doctor placing a hand on a patient\'s back next to a spine model to find the sore spot',
+    position: '50% 40%',
   },
 
   hero: {
