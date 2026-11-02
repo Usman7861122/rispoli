@@ -32,7 +32,6 @@ export default function DrAbout({ about, focus, photos }: Props) {
     transition: { duration: 0.7, ease: EASE, delay },
   });
   const second = photos[1];
-  const gallery = photos.slice(2);
 
   return (
     <>
@@ -120,19 +119,6 @@ export default function DrAbout({ about, focus, photos }: Props) {
           </div>
         </div>
       </section>
-
-      {/* More photos (only if there are any) */}
-      {gallery.length > 0 && (
-        <section className="bg-white py-16 lg:py-24" aria-label="Photos of Dr. Rispoli">
-          <div className={`mx-auto grid max-w-[1400px] gap-5 px-6 lg:px-12 ${gallery.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : gallery.length === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
-            {gallery.map((g, i) => (
-              <motion.figure key={g.src} {...fade(0.07 * i)} className="overflow-hidden rounded-xl">
-                <img src={g.src} alt={g.alt} loading="lazy" className="aspect-square w-full object-cover transition-transform duration-700 hover:scale-105" style={{ objectPosition: g.position }} />
-              </motion.figure>
-            ))}
-          </div>
-        </section>
-      )}
     </>
   );
 }
