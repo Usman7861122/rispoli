@@ -21,16 +21,16 @@ export default function AboutSection({ data }: Props) {
 
   return (
     <section id="about" className="bg-white py-20 lg:py-32">
-      <div className="mx-auto grid max-w-[1400px] items-center gap-12 px-6 lg:grid-cols-[1.2fr_1fr] lg:gap-16 lg:px-12">
+      <div className="mx-auto grid max-w-[1400px] items-stretch gap-12 px-6 lg:grid-cols-[1.2fr_1fr] lg:gap-16 lg:px-12">
         {/* Photo: square with slightly rounded corners */}
         <motion.figure
-          className="w-full"
+          className="flex w-full flex-col"
           initial={reduce ? false : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.9, ease: EASE }}
         >
-          <div className="relative">
+          <div className="relative flex-1">
             {/* offset outline in logo green */}
             <span aria-hidden="true" className="pointer-events-none absolute -bottom-3 -right-3 h-full w-full rounded-xl border border-palm/60" />
             <img
@@ -38,7 +38,7 @@ export default function AboutSection({ data }: Props) {
               alt={data.imageAlt}
               referrerPolicy="no-referrer"
               loading="lazy"
-              className="relative aspect-[4/3] w-full rounded-xl object-cover shadow-[0_30px_60px_-30px_rgba(10,27,61,0.45)]"
+              className="relative aspect-[4/3] w-full rounded-xl object-cover lg:absolute lg:inset-0 lg:aspect-auto lg:h-full shadow-[0_30px_60px_-30px_rgba(10,27,61,0.45)]"
               style={{ objectPosition: data.position }}
             />
           </div>
@@ -46,20 +46,20 @@ export default function AboutSection({ data }: Props) {
         </motion.figure>
 
         {/* Text */}
-        <div>
+        <div className="lg:py-4">
           <motion.p {...fade(0)} className="flex items-center gap-4 text-[13px] font-semibold uppercase tracking-[0.26em] text-palm">
             <span className="h-px w-12 bg-palm" />
             {data.eyebrow}
           </motion.p>
 
-          <motion.h2 {...fade(0.08)} className="mt-5 font-display text-[clamp(2.2rem,4.2vw,3.8rem)] leading-[1.06] text-navy">
+          <motion.h2 {...fade(0.08)} className="mt-5 font-display text-[clamp(2rem,3.3vw,3rem)] leading-[1.08] text-navy">
             {data.title.split(' ').map((w, i) => (
               <span key={i} className={w.replace(/[.,]/g, '') === data.accent ? 'italic text-palm' : ''}>{w} </span>
             ))}
           </motion.h2>
 
           {data.paragraphs.map((p, i) => (
-            <motion.p key={i} {...fade(0.16 + i * 0.06)} className="mt-6 max-w-[34rem] text-[18px] leading-relaxed text-slate">
+            <motion.p key={i} {...fade(0.16 + i * 0.06)} className="mt-5 max-w-[34rem] text-[17px] leading-relaxed text-slate">
               {p}
             </motion.p>
           ))}
