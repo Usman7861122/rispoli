@@ -82,8 +82,9 @@ export function ServiceHero({ data, photo, bookingUrl, phone }: {
           <motion.h1 {...fade(0.08)} className={`mt-6 font-display text-[clamp(2.8rem,6vw,5.4rem)] leading-[1.04]`}>
             {data.pill ? (
               <>
-                {data.name.replace(data.accent, '')}
+                {data.name.slice(0, Math.max(0, data.name.indexOf(data.accent)))}
                 <span className="italic text-palm-bright">{data.accent}</span>
+                {data.name.slice(data.name.indexOf(data.accent) + data.accent.length)}
               </>
             ) : (
               <Title text={data.name} accent={data.accent} dark />
