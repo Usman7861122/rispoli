@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MeetHero from '../components/react/MeetHero';
+import ProviderGrid from '../components/react/ProviderGrid';
+import OfficeTeam from '../components/react/OfficeTeam';
+import TeamGallery from '../components/react/TeamGallery';
+import DrCta from '../components/react/DrCta';
+import { meetTeam as d } from '../data/meet-team';
+import { site } from '../data/site';
+---
+<BaseLayout title={d.seoTitle} description={d.seoDescription}>
+  <MeetHero client:load data={d.hero} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <ProviderGrid client:visible data={d.providers} />
+  <OfficeTeam client:visible data={d.office} />
+  <TeamGallery client:visible data={d.gallery} />
+  <DrCta client:visible data={d.cta} bookingUrl={site.bookingUrl} phone={site.phone} />
+</BaseLayout>
