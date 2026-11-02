@@ -77,10 +77,11 @@ export default function DrAbout({ about, focus, photos }: Props) {
         {second && (
           <div className="mx-auto mt-16 grid max-w-[1400px] gap-5 px-6 md:grid-cols-3 lg:px-12">
             {about.approach.map((a, i) => (
-              <motion.div key={a.title} {...fade(0.08 * i)} className="rounded-xl bg-palm-soft p-7">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-palm text-[15px] font-semibold text-white">{i + 1}</span>
-                <h3 className="mt-4 font-display text-[24px] text-navy-deep">{a.title}</h3>
-                <p className="mt-2 text-[16px] leading-relaxed text-slate">{a.text}</p>
+              <motion.div key={a.title} {...fade(0.08 * i)} className="group relative cursor-default overflow-hidden rounded-xl bg-palm-soft p-7 transition-[translate,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-palm/25">
+                <span aria-hidden="true" className="absolute inset-0 origin-bottom scale-y-0 bg-palm transition-transform duration-500 ease-out group-hover:scale-y-100" />
+                <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-palm text-[15px] font-semibold text-white transition-all duration-500 group-hover:rotate-[360deg] group-hover:bg-white group-hover:text-palm">{i + 1}</span>
+                <h3 className="relative mt-4 font-display text-[24px] text-navy-deep transition-colors duration-500 group-hover:text-white">{a.title}</h3>
+                <p className="relative mt-2 text-[16px] leading-relaxed text-slate transition-colors duration-500 group-hover:text-white/90">{a.text}</p>
               </motion.div>
             ))}
           </div>
