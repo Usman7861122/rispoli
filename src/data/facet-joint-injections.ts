@@ -5,6 +5,14 @@ import type { esi } from './esi';
 
 export const facet: typeof esi = {
   slug: 'facet-joint-injections',
+  category: 'spine-injections',
+  card: {
+    short: 'Calms the small joints at the back of the spine, and helps us find if they cause your pain.',
+    bestFor: 'Back or neck pain that flares when you bend, twist or lean back',
+    time: '15–30 minutes',
+    guidePain: 'Back or neck pain when you twist or lean back',
+    guideWhy: 'Often the small joints of the spine',
+  },
   topic: 'facet joint injections',
   seoTitle: 'Facet Joint Injections',
   seoDescription:

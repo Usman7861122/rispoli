@@ -1,0 +1,17 @@
+---
+// City versions of every service page: /services/<service>/<city>. The four spine services have their own files.
+import ServicePageView from '../../../components/ServicePageView.astro';
+import { allServices } from '../../../data/service-pages';
+import { locations } from '../../../data/locations';
+
+export function getStaticPaths() {
+  return allServices.flatMap((s) =>
+    s.locationSlugs.map((city) => ({
+      params: { slug: s.slug, city },
+      props: { service: s, office: locations.offices.find((o) => o.slug === city)! },
+    })),
+  );
+}
+const { service, office } = Astro.props;
+---
+<ServicePageView d={service} office={office} />

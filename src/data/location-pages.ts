@@ -3,7 +3,8 @@
 import { locations } from './locations';
 import { team } from './team';
 import { site } from './site';
-import { hub } from './spine-injections';
+import { allServices } from './service-pages';
+import { categories } from './service-categories';
 
 export const hours = [
   { day: 'Monday', open: '8:00 AM', close: '5:00 PM', from: 480, to: 1020 },
@@ -15,25 +16,22 @@ export const hours = [
   { day: 'Sunday', open: '', close: '', from: 0, to: 0 },
 ];
 
-// Services that already have their own page with a city version.
-const withCityVersion = new Set(hub.pages.map((p: any) => p.slug));
 const everyone = [...team.lead, ...team.peers];
-
-const nav: any = (site.nav as unknown as any[]).find((n) => n.label === 'Services');
-const groups: { title: string; href: string; items: { label: string; href: string }[] }[] = nav.groups;
 
 export function locationPage(slug: string) {
   const o: any = locations.offices.find((x) => x.slug === slug);
   if (!o) throw new Error(`Unknown office: ${slug}`);
 
-  const serviceGroups = groups.map((g) => ({
-    title: g.title,
-    href: g.href,
-    items: g.items.map((it) => {
-      const s = it.href.replace('/services/', '');
-      return { label: it.label, href: withCityVersion.has(s) ? `${it.href}/${slug}` : it.href };
-    }),
-  }));
+  // Only the treatments this office offers, grouped like the Services page. Each button opens the city version.
+  const serviceGroups = categories
+    .map((c) => ({
+      title: c.title,
+      href: `/services/${c.slug}`,
+      items: allServices
+        .filter((sv) => sv.category === c.slug && sv.locationSlugs.includes(slug))
+        .map((sv) => ({ label: sv.hero.name.replace(/^The /, ''), href: `/services/${sv.slug}/${slug}` })),
+    }))
+    .filter((g) => g.items.length);
   const serviceCount = serviceGroups.reduce((n, g) => n + g.items.length, 0);
 
   const doctors = o.providers

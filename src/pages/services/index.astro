@@ -1,9 +1,29 @@
 ---
-import PageLayout from '../../layouts/PageLayout.astro';
-import Services from '../../components/sections/Services.astro';
-import Insurance from '../../components/sections/Insurance.astro';
-import WhyChoose from '../../components/sections/WhyChoose.astro';
+// All services, with a toggle on top to show one category at a time.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { ServiceHero } from '../../components/react/ServiceBlocks';
+import ServicesBrowser from '../../components/react/ServicesBrowser';
+import { categories, servicesIn } from '../../data/service-categories';
+import { allServices } from '../../data/service-pages';
+import { site } from '../../data/site';
+
+const cats = categories.map((c) => ({
+  slug: c.slug, title: c.title, short: c.short, href: `/services/${c.slug}`,
+  items: servicesIn(c.slug).map((s: any) => ({
+    slug: s.slug, name: s.hero.name.replace(/^The /, ''), short: s.card.short,
+    image: s.photo.src, fallback: s.photo.fallback, position: s.photo.position, alt: s.photo.alt, href: `/services/${s.slug}`,
+  })),
+}));
+const hero = {
+  eyebrow: 'Our care',
+  name: 'All Services',
+  accent: 'Services',
+  lede: 'Non-surgical care first. Advanced treatments when you need them. Pick a group to see what we offer.',
+  chips: [`${allServices.length} treatments`, `${categories.length} groups`, '3 offices', 'Image-guided'],
+};
+const photo = { src: '/images/services/esi/doctor-back.jpg', fallback: '/images/services/back-pain.jpg', alt: 'Doctor placing a hand on a patient’s back next to a spine model', position: '50% 40%' };
 ---
-<PageLayout title="Services" eyebrow="Our care" lede="Non-surgical care first. Advanced options when needed.">
-  <Services /><Insurance /><WhyChoose />
-</PageLayout>
+<BaseLayout title="Services" description="All treatments at Westside Interventional Pain & Physiatry: spine injections, nerve stimulation, nerve blocks, Botox, regenerative medicine and more.">
+  <ServiceHero client:load data={hero} photo={photo} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <ServicesBrowser client:load cats={cats} />
+</BaseLayout>

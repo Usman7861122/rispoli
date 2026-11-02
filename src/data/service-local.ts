@@ -19,7 +19,7 @@ export function localize<T extends ServiceLike>(s: T, o: Office, treatingNames: 
   const nearby = list(o.nearby.slice(0, 4));
   return {
     seoTitle: `${s.seoTitle} in ${o.city}`,
-    seoDescription: `${s.seoTitle} at our ${o.city} office, ${o.street}. Non-surgical, image-guided spine pain care for patients in ${o.city} and nearby ${o.nearby.slice(0, 3).join(', ')}.`,
+    seoDescription: `${s.seoTitle} at our ${o.city} office, ${o.street}. Non-surgical pain care for patients in ${o.city} and nearby ${o.nearby.slice(0, 3).join(', ')}.`,
     hero: {
       ...s.hero,
       eyebrow: `${s.hero.eyebrow} · ${o.city}`,

@@ -5,6 +5,14 @@ import type { esi } from './esi';
 
 export const intracept: typeof esi = {
   slug: 'intracept-procedure',
+  category: 'spine-injections',
+  card: {
+    short: 'Treats a nerve inside the spine bone that can cause long-lasting low back pain.',
+    bestFor: 'Chronic low back pain that has not eased with other care',
+    time: 'About an hour',
+    guidePain: 'A deep, constant low back ache for 6 months or more',
+    guideWhy: 'Sometimes the nerve inside the spine bone',
+  },
   topic: 'the Intracept procedure',
   seoTitle: 'Intracept Procedure',
   seoDescription:

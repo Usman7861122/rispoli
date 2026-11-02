@@ -467,8 +467,8 @@ export function HubGuide({ eyebrow, title, accent, text, rows, note }: { eyebrow
 }
 
 /* ---------- Hub: offices, with a button per treatment ---------- */
-export function HubOffices({ title, accent, text, offices, bookingUrl, phone }: {
-  title: string; accent: string; text: string; bookingUrl: string; phone: string;
+export function HubOffices({ title, accent, text, offices, bookingUrl, phone, groupTitle = 'Treatments' }: {
+  title: string; accent: string; text: string; bookingUrl: string; phone: string; groupTitle?: string;
   offices: { slug: string; city: string; street: string; cityLine: string; image: string; position: string; links: { label: string; href: string }[] }[];
 }) {
   const fade = useFade();
@@ -483,7 +483,7 @@ export function HubOffices({ title, accent, text, offices, bookingUrl, phone }: 
               <span className="flex flex-1 flex-col px-3 pb-3 pt-5">
                 <span className="font-display text-[28px] leading-tight text-navy-deep">{o.city}</span>
                 <address className="mt-2 text-[16px] not-italic leading-relaxed text-slate">{o.street}<br />{o.cityLine}</address>
-                <span className="mt-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm">Spine injections in {o.city}</span>
+                <span className="mt-4 text-[12px] font-semibold uppercase tracking-[0.18em] text-palm">{groupTitle} in {o.city}</span>
                 <span className="mt-3 flex flex-wrap gap-2">
                   {o.links.map((l) => (
                     <a key={l.href} href={l.href} className="rounded-full border border-navy/25 px-4 py-2 text-[12px] font-semibold tracking-[0.06em] text-navy transition-colors duration-300 hover:bg-navy hover:text-white">{l.label}</a>

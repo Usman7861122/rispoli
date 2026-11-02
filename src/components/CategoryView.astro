@@ -1,0 +1,49 @@
+---
+// A treatment group page, e.g. /services/nerve-stimulation. Lists the group's treatments, a "which one fits" guide, doctors and offices.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ServiceHero, HubTreatments, HubGuide, HubOffices, ServiceProviders, ServiceRelated } from './react/ServiceBlocks';
+import { categories, servicesIn } from '../data/service-categories';
+import { team } from '../data/team';
+import { locations } from '../data/locations';
+import { site } from '../data/site';
+
+const { slug } = Astro.props;
+const cat = categories.find((c) => c.slug === slug)!;
+const list = servicesIn(slug);
+const first = list.find((s) => s.slug === cat.heroFrom) ?? list[0];
+const short = (s: any) => s.hero.name.replace(/^The /, '');
+
+const hero = { eyebrow: 'Services', ...cat.hero, pill: false };
+const photo = { src: first.photo.src, fallback: first.photo.fallback, alt: first.photo.alt, position: first.photo.position };
+const items = list.map((s: any) => ({
+  slug: s.slug, name: short(s), short: s.card.short, bestFor: s.card.bestFor, time: s.card.time,
+  image: s.photo.src, fallback: s.photo.fallback, position: s.photo.position, alt: s.photo.alt, href: `/services/${s.slug}`,
+}));
+const guideRows = list.map((s: any) => ({ pain: s.card.guidePain, where: s.card.guideWhy, label: short(s), href: `/services/${s.slug}` }));
+
+const everyone = [...team.lead, ...team.peers];
+const slugs = [...new Set(list.flatMap((p: any) => p.providerSlugs))];
+const providerCards = slugs
+  .map((sl) => everyone.find((p) => p.slug === sl))
+  .filter((p: any) => !!p)
+  .map((p: any) => ({
+    slug: p.slug, name: p.name, role: p.role, image: p.image, position: p.position, alt: p.imageAlt, href: p.href,
+    line: list.filter((x: any) => x.providerSlugs.includes(p.slug)).map(short).join(' · '),
+  }));
+const offices = locations.offices
+  .map((o: any) => ({
+    slug: o.slug, city: o.city, street: o.street, cityLine: o.cityLine, image: o.image, position: o.position,
+    links: list.filter((p: any) => p.locationSlugs.includes(o.slug)).map((p: any) => ({ label: short(p), href: `/services/${p.slug}/${o.slug}` })),
+  }))
+  .filter((o) => o.links.length);
+const related = categories.filter((c) => c.slug !== slug).map((c) => ({ label: c.title, href: `/services/${c.slug}` }));
+related.push({ label: 'All services', href: '/services' });
+---
+<BaseLayout title={cat.hero.name} description={cat.seoDescription}>
+  <ServiceHero client:load data={hero} photo={photo} bookingUrl={site.bookingUrl} phone={site.phone} />
+  <HubTreatments client:visible eyebrow="Our treatments" title={cat.treatments.title} accent={cat.treatments.accent} text={cat.treatments.text} items={items} />
+  <HubGuide client:visible eyebrow="Which one fits?" title="Start with where it hurts." accent="where it hurts." text="A simple guide. Your doctor confirms the best choice after an exam." rows={guideRows} note="This guide is general information, not a diagnosis. Pain can have more than one cause, and a visit with your doctor is the way to find yours." />
+  <ServiceProviders client:visible title="Doctors who treat this." accent="treat this." text="Our doctors perform these treatments. The line under each name shows which ones." cards={providerCards} />
+  <HubOffices client:visible title="Treated close to you." accent="close to you." text="Choose your office, then the treatment you want to read about." offices={offices} bookingUrl={site.bookingUrl} phone={site.phone} groupTitle={cat.title} />
+  <ServiceRelated client:visible items={related} />
+</BaseLayout>

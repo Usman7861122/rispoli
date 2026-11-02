@@ -1,24 +1,35 @@
 ---
+// Service pages, group pages and leftover stubs. The four spine pages have their own files, which take priority.
 import PageLayout from '../../layouts/PageLayout.astro';
 import Section from '../../components/ui/Section.astro';
 import Button from '../../components/ui/Button.astro';
-import LocalSection from '../../components/sections/LocalSection.astro';
-import Services from '../../components/sections/Services.astro';
+import ServicePageView from '../../components/ServicePageView.astro';
+import CategoryView from '../../components/CategoryView.astro';
+import { allServices } from '../../data/service-pages';
+import { categories } from '../../data/service-categories';
 import { services } from '../../data/services';
-import { localFor } from '../../data/local';
 import { site } from '../../data/site';
 
 export function getStaticPaths() {
-  return services.map((s) => ({ params: { slug: s.slug }, props: { service: s } }));
+  const done = new Set([...allServices.map((s) => s.slug), ...categories.map((c) => c.slug)]);
+  return [
+    ...allServices.map((s) => ({ params: { slug: s.slug }, props: { kind: 'service', slug: s.slug } })),
+    ...categories.map((c) => ({ params: { slug: c.slug }, props: { kind: 'category', slug: c.slug } })),
+    // Old placeholder pages that have no real page yet
+    ...services.filter((s) => !done.has(s.slug)).map((s) => ({ params: { slug: s.slug }, props: { kind: 'stub', slug: s.slug } })),
+  ];
 }
-const { service } = Astro.props;
-const l = localFor(service.title);
+const { kind, slug } = Astro.props;
+const service = allServices.find((s) => s.slug === slug);
+const stub = services.find((s) => s.slug === slug);
 ---
-<PageLayout title={l.title} eyebrow="Services" lede={service.short}>
-  <Section>
-    <p class="max-w-2xl text-ink/70">Overview. TODO: intro, what it is, who it is for, benefits, recovery, safety, FAQs.</p>
-    <div class="mt-6"><Button href={site.bookingUrl} external>Book a consultation</Button></div>
-  </Section>
-  <LocalSection topic={service.title} />
-  <Services exclude={[service.slug]} />
-</PageLayout>
+{kind === 'service' && <ServicePageView d={service} />}
+{kind === 'category' && <CategoryView slug={slug} />}
+{kind === 'stub' && (
+  <PageLayout title={stub!.title} eyebrow="Services" lede={stub!.short}>
+    <Section>
+      <p class="max-w-2xl text-ink/70">This page is coming soon. Call us on {site.phone} to learn more.</p>
+      <div class="mt-6"><Button href={site.bookingUrl} external>Book a consultation</Button></div>
+    </Section>
+  </PageLayout>
+)}

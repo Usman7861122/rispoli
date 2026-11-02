@@ -5,6 +5,14 @@ import type { esi } from './esi';
 
 export const siJoint: typeof esi = {
   slug: 'si-joint-injections',
+  category: 'spine-injections',
+  card: {
+    short: 'Treats the joint where the spine meets the pelvis, to ease low back, buttock and hip pain.',
+    bestFor: 'Pain low on one side of the back, near the hip',
+    time: '15–30 minutes',
+    guidePain: 'Low back pain on one side, with hip or buttock pain',
+    guideWhy: 'Often the SI joint',
+  },
   topic: 'SI joint injections',
   seoTitle: 'SI Joint Injections',
   seoDescription:

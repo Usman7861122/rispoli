@@ -6,6 +6,14 @@
 
 export const esi = {
   slug: 'epidural-steroid-injections',
+  category: 'spine-injections',
+  card: {
+    short: 'Calms a swollen spinal nerve with a steroid, so pain that travels down an arm or leg eases.',
+    bestFor: 'Pinched nerve, sciatica, disc problems, spinal stenosis',
+    time: '15–30 minutes',
+    guidePain: 'Pain that shoots down an arm or leg',
+    guideWhy: 'Often a squeezed or swollen nerve',
+  },
   topic: 'epidural steroid injections', // used inside city-page sentences
   seoTitle: 'Epidural Steroid Injections',
   seoDescription:

@@ -71,21 +71,21 @@ export const site = {
           ],
         },
         {
-          title: 'Nerve stimulation', href: '/services#nerve-stimulation',
+          title: 'Nerve stimulation', href: '/services/nerve-stimulation',
           items: [
             { label: 'Spinal cord stimulator', href: '/services/spinal-cord-stimulation' },
             { label: 'Peripheral nerve stimulator', href: '/services/peripheral-nerve-stimulator' },
           ],
         },
         {
-          title: 'Pelvic care & more', href: '/services#pelvic-and-more',
+          title: 'Pelvic care & more', href: '/services/pelvic-care',
           items: [
             { label: 'Pelvic floor injections', href: '/services/pelvic-floor-injections' },
             { label: 'Medical acupuncture', href: '/services/medical-acupuncture' },
           ],
         },
         {
-          title: 'Nerve blocks & ablation', href: '/services#nerve-blocks',
+          title: 'Nerve blocks & ablation', href: '/services/nerve-blocks-and-ablation',
           items: [
             { label: 'Radiofrequency ablation', href: '/services/radiofrequency-ablation' },
             { label: 'Genicular nerve block / RFA', href: '/services/genicular-nerve-block' },
@@ -98,7 +98,7 @@ export const site = {
         {
           title: 'Botox', href: '/services/botox',
           items: [
-            { label: 'Botox for pain', href: '/services/botox' },
+            { label: 'Botox for pain', href: '/services/botox-for-pain' },
             { label: 'Botox for migraine & spasms', href: '/services/botox-migraine-spasms' },
           ],
         },
@@ -112,7 +112,7 @@ export const site = {
           ],
         },
         {
-          title: 'Joint & soft tissue', href: '/services#joint-and-soft-tissue',
+          title: 'Joint & soft tissue', href: '/services/joint-and-soft-tissue',
           items: [
             { label: 'Joint injections', href: '/services/joint-injections' },
             { label: 'Bursa injections', href: '/services/bursa-injections' },
