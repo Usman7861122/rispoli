@@ -60,7 +60,7 @@ const tel = (p: string) => `tel:${p.replace(/[^\d+]/g, '')}`;
 
 /* ---------- Hero ---------- */
 export function ServiceHero({ data, photo, bookingUrl, phone }: {
-  data: { eyebrow: string; name: string; accent: string; lede: string; chips: string[] };
+  data: { eyebrow: string; name: string; accent: string; lede: string; chips: string[]; pill?: boolean; nearbyNote?: string };
   photo: { src: string; fallback: string; alt: string; position: string };
   bookingUrl: string; phone: string;
 }) {
@@ -79,8 +79,15 @@ export function ServiceHero({ data, photo, bookingUrl, phone }: {
           <motion.p {...fade(0)} className="flex items-center gap-4 text-[13px] font-semibold uppercase tracking-[0.26em] text-palm-soft">
             <span className="h-px w-12 bg-palm-soft/70" />{data.eyebrow}
           </motion.p>
-          <motion.h1 {...fade(0.08)} className="mt-6 font-display text-[clamp(2.8rem,6vw,5.4rem)] leading-[1.04]">
-            <Title text={data.name} accent={data.accent} dark />
+          <motion.h1 {...fade(0.08)} className={`mt-6 font-display text-[clamp(2.8rem,6vw,5.4rem)] ${data.pill ? 'leading-[1.1]' : 'leading-[1.04]'}`}>
+            {data.pill ? (
+              <>
+                {data.name.replace(data.accent, '')}
+                <span className="mt-2 inline-block rounded-xl bg-palm px-4 pb-1 italic leading-[1.1] text-white">{data.accent}</span>
+              </>
+            ) : (
+              <Title text={data.name} accent={data.accent} dark />
+            )}
           </motion.h1>
           <motion.p {...fade(0.16)} className="mt-6 max-w-[48ch] text-[20px] leading-relaxed text-white/85">{data.lede}</motion.p>
           <motion.ul {...fade(0.24)} className="mt-8 flex flex-wrap gap-3">
@@ -95,6 +102,14 @@ export function ServiceHero({ data, photo, bookingUrl, phone }: {
             </a>
             <a href={tel(phone)} className={btnGhostDark}>Call {phone}</a>
           </motion.div>
+          {data.nearbyNote && (
+            <motion.div {...fade(0.4)} className="mt-10 border-t border-white/20 pt-6">
+              <p className="flex items-start gap-4 text-[18px] font-light leading-relaxed text-white/80">
+                <svg viewBox="0 0 24 24" className="mt-1 h-6 w-6 shrink-0 text-palm-soft" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></svg>
+                <span>{data.nearbyNote}</span>
+              </p>
+            </motion.div>
+          )}
         </div>
         <motion.figure
           initial={reduce ? false : { opacity: 0, scale: 0.94, y: 30 }}

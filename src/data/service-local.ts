@@ -24,7 +24,9 @@ export function localize<T extends ServiceLike>(s: T, o: Office, treatingNames: 
       ...s.hero,
       eyebrow: `${s.hero.eyebrow} · ${o.city}`,
       name: `${s.hero.name} in ${o.city}`,
-      accent: `in ${o.city}`,
+      accent: o.city,
+      pill: true, // city shown on a solid palm-green highlight
+      nearbyNote: `Patients are welcome from across ${o.city}, ${list(o.nearby)} and the surrounding area.`,
       lede: `${s.hero.lede} Offered at our ${o.city} office.`,
       chips: [`${o.city} office`, ...s.hero.chips.slice(0, 3)],
     },
