@@ -83,11 +83,11 @@ function Card({ p, lead, i, offset }: { p: Provider; lead?: boolean; i: number; 
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.75, ease: EASE, delay: (i % 3) * 0.1 }}
     >
-      <a href={p.href} className="group flex h-full flex-col rounded-xl bg-white p-3 shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/5 transition-shadow duration-500 hover:shadow-[0_40px_70px_-34px_rgba(10,27,61,0.55)]">
-        <Photo p={p} ratio={lead ? 'aspect-[4/4.6]' : 'aspect-square'} />
-        <div className={`flex flex-1 flex-col ${lead ? 'px-4 pb-5 pt-6 lg:px-6 lg:pb-7' : 'px-3 pb-4 pt-5 lg:px-4'}`}>
+      <a href={p.href} className={`group flex h-full flex-col ${lead ? '' : 'sm:flex-row sm:gap-6'} rounded-xl bg-white p-3 shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/5 transition-shadow duration-500 hover:shadow-[0_40px_70px_-34px_rgba(10,27,61,0.55)]`}>
+        <Photo p={p} ratio={lead ? 'aspect-[4/4.6]' : 'aspect-square sm:w-[40%] sm:shrink-0 sm:self-start'} />
+        <div className={`flex flex-1 flex-col ${lead ? 'px-4 pb-5 pt-6 lg:px-6 lg:pb-7' : 'px-3 pb-4 pt-5 sm:justify-center sm:px-0 sm:py-3 sm:pr-4'}`}>
           <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-palm">{p.role}</p>
-          <h3 className={`mt-2 font-display leading-tight text-navy ${lead ? 'text-[2rem] lg:text-[2.5rem]' : 'text-[1.6rem] lg:text-[1.8rem]'}`}>{p.name}</h3>
+          <h3 className={`mt-2 font-display leading-tight text-navy ${lead ? 'text-[2rem] lg:text-[2.5rem]' : 'text-[1.6rem] xl:whitespace-nowrap xl:text-[1.9rem]'}`}>{p.name}</h3>
           <Tags tags={p.tags} role={p.role} />
           {lead && p.bio ? (
             <div className="mt-4 space-y-3 text-[16.5px] leading-relaxed text-slate">
@@ -176,7 +176,7 @@ export default function TeamSection({ data, bookingUrl }: Props) {
         </ul>
 
         {/* Four providers: same card style, equal size */}
-        <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:mt-8 lg:grid-cols-4 lg:gap-8">
+        <ul className="mt-6 grid gap-6 lg:mt-8 lg:grid-cols-2 lg:gap-8">
           {data.peers.map((p, i) => <Card key={p.slug} p={p} i={i} />)}
         </ul>
 
