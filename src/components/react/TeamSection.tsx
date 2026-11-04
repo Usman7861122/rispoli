@@ -57,16 +57,19 @@ function Photo({ p, ratio }: { p: Provider; ratio: string }) {
         />
       )}
       <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-navy-deep/35 to-transparent" />
-      {/* chips: same style for every provider */}
-      <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-        {p.tags.map((t) => (
-          <span key={t} className="rounded-full bg-white/92 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-palm backdrop-blur">
-            {t}
-          </span>
-        ))}
-      </div>
       <span aria-hidden="true" className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-palm transition-transform duration-500 group-hover:scale-x-100" />
     </div>
+  );
+}
+
+function Tags({ tags, role }: { tags: string[]; role: string }) {
+  // skip a chip that only repeats the role line above it
+  const shown = tags.filter((t) => !role.toLowerCase().includes(t.toLowerCase()));
+  if (!shown.length) return null;
+  return (
+    <ul className="mt-4 flex flex-wrap gap-2" aria-label="Credentials">
+      {shown.map((t) => <li key={t} className="rounded-full bg-palm-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-palm">{t}</li>)}
+    </ul>
   );
 }
 
@@ -85,6 +88,7 @@ function Card({ p, lead, i, offset }: { p: Provider; lead?: boolean; i: number; 
         <div className={`flex flex-1 flex-col ${lead ? 'px-4 pb-5 pt-6 lg:px-6 lg:pb-7' : 'px-3 pb-4 pt-5 lg:px-4'}`}>
           <p className="text-[12px] font-semibold uppercase tracking-[0.2em] text-palm">{p.role}</p>
           <h3 className={`mt-2 font-display leading-tight text-navy ${lead ? 'text-[2rem] lg:text-[2.5rem]' : 'text-[1.6rem] lg:text-[1.8rem]'}`}>{p.name}</h3>
+          <Tags tags={p.tags} role={p.role} />
           {lead && p.bio ? (
             <div className="mt-4 space-y-3 text-[16.5px] leading-relaxed text-slate">
               {p.bio.map((b, k) => <p key={k}>{b}</p>)}
@@ -124,6 +128,7 @@ function WideCard({ p }: { p: Provider }) {
           )}
           <h3 className="mt-3 font-display text-[2.1rem] leading-tight text-navy lg:text-[2.8rem]">{p.name}</h3>
           <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate">{p.role}</p>
+          <Tags tags={p.tags} role={p.role} />
           {p.bio && <div className="mt-5 max-w-[60ch] space-y-3 text-[17px] leading-relaxed text-slate">{p.bio.map((b, k) => <p key={k}>{b}</p>)}</div>}
           <div className="pt-7">
             <span className="relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-navy/25 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-navy transition-colors duration-500 group-hover:border-navy group-hover:text-white">
