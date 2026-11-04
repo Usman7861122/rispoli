@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-interface Item { slug: string; name: string; role: string; line: string; image: string; position: string; alt: string }
+interface Item { slug: string; name: string; role: string; badge?: string; line: string; image: string; position: string; alt: string }
 interface Props { data: { eyebrow: string; title: string; accent: string; intro: string; items: Item[] } }
 
 export default function ProviderGrid({ data }: Props) {
@@ -25,21 +25,22 @@ export default function ProviderGrid({ data }: Props) {
         </motion.h2>
         <motion.p {...fade(0.14)} className="mt-4 max-w-[56ch] text-[18px] leading-relaxed text-slate">{data.intro}</motion.p>
 
-        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {data.items.map((p, i) => {
-            const lead = i < 2;
+            const lead = !!p.badge;
             return (
-              <motion.li key={p.slug} {...fade(0.08 * (i % 3))} className={lead ? 'lg:col-span-3' : 'lg:col-span-2'}>
-                <a href={`/${p.slug}`} className="group flex h-full flex-col rounded-xl bg-white p-3 shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/10 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_40px_70px_-30px_rgba(10,27,61,0.55)]">
-                  <span className="relative block overflow-hidden rounded-xl">
+              <motion.li key={p.slug} {...fade(0.08 * (i % 3))} className={lead ? 'sm:col-span-2 lg:col-span-4' : ''}>
+                <a href={`/${p.slug}`} className={`group flex h-full flex-col ${lead ? 'md:flex-row md:gap-10 md:p-4' : ''} rounded-xl bg-white p-3 shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/10 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_40px_70px_-30px_rgba(10,27,61,0.55)]`}>
+                  <span className={`relative block overflow-hidden rounded-xl ${lead ? 'md:w-[36%] md:shrink-0' : ''}`}>
                     <img src={p.image} alt={p.alt} loading="lazy" className="aspect-square w-full object-cover transition-transform duration-[1100ms] ease-out group-hover:scale-[1.04]" style={{ objectPosition: p.position }} />
                     <span aria-hidden="true" className="absolute bottom-0 left-0 h-[3px] w-full origin-left scale-x-0 bg-palm transition-transform duration-500 group-hover:scale-x-100" />
                   </span>
-                  <span className={`flex flex-1 flex-col ${lead ? 'px-3 pb-5 pt-6 lg:px-5' : 'px-3 pb-4 pt-5'}`}>
+                  <span className={`flex flex-1 flex-col ${lead ? 'px-3 pb-5 pt-6 md:justify-center md:px-0 md:py-4 md:pr-8' : 'px-3 pb-4 pt-5'}`}>
+                    {p.badge && <span className="mb-3 inline-flex w-fit items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.24em] text-palm"><span className="h-px w-8 bg-palm" />{p.badge}</span>}
                     <span className="text-[12px] font-semibold uppercase tracking-[0.2em] text-palm">{p.role}</span>
-                    <span className={`mt-2 block font-display leading-tight text-navy-deep ${lead ? 'text-[2rem] lg:text-[2.4rem]' : 'text-[1.6rem]'}`}>{p.name}</span>
+                    <span className={`mt-2 block font-display leading-tight text-navy-deep ${lead ? 'text-[2.1rem] lg:text-[2.8rem]' : 'text-[1.5rem]'}`}>{p.name}</span>
                     <span className="mt-3 block text-[16px] leading-relaxed text-slate">{p.line}</span>
-                    <span className="mt-auto pt-6">
+                    <span className={lead ? 'mt-6' : 'mt-auto pt-6'}>
                       <span className="relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-navy/25 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-navy transition-colors duration-500 group-hover:text-white">
                         <span aria-hidden="true" className="absolute inset-0 -translate-x-full bg-navy transition-transform duration-500 group-hover:translate-x-0" />
                         <span className="relative flex items-center gap-3">

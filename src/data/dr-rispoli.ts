@@ -14,7 +14,7 @@ export const drRispoli = {
   ] as { src: string; alt: string; position: string }[],
 
   hero: {
-    eyebrow: 'Interventional Pain & Physical Medicine',
+    eyebrow: 'Founder & Owner · Interventional Pain & Physical Medicine',
     name: 'Dr. Leia Rispoli',
     accent: 'Rispoli',
     lede: 'Double board-certified. Focused on one goal: helping you move with less pain, without surgery.',
@@ -27,7 +27,7 @@ export const drRispoli = {
     accent: 'caring',
     paragraphs: [
       'Dr. Leia Rispoli is a double board-certified interventional pain medicine physician who specializes in non-surgical pain management. She helps people with long-lasting (chronic) and sudden (acute) pain using modern, evidence-based treatments.',
-      'Her approach is patient-centered and kind. Her goal is simple: restore function, reduce discomfort, and improve your quality of life.',
+      'Dr. Rispoli founded Westside Interventional Pain & Physiatry, and she leads the practice alongside four fellow providers. Her approach is patient-centered and kind. Her goal is simple: restore function, reduce discomfort, and improve your quality of life.',
       'She treats low back pain, neck pain, joint pain, pelvic pain, and headaches. Her treatments are minimally invasive, which means small procedures with no large cuts, so patients can get back to the things they love.',
     ],
     approachTitle: 'How she works with you',

@@ -45,7 +45,7 @@ export const providers: ProviderPage[] = [
       { src: '/images/team/mehta-about.jpg', alt: 'Dr. Natasha Mehta in her white coat, smiling', position: '50% 24%' },
     ],
     hero: {
-      eyebrow: 'Associate Physician · PM&R',
+      eyebrow: 'Physician · PM&R · Brain Injury Medicine',
       name: 'Dr. Natasha Mehta', accent: 'Mehta',
       lede: 'Double board-certified in physical medicine and rehabilitation, and in traumatic brain injury. Care that helps you function and feel like yourself again.',
       chips: ['Double board-certified', 'Rehabilitation', 'Brain injury care'],
@@ -53,9 +53,9 @@ export const providers: ProviderPage[] = [
     about: {
       eyebrow: 'About Dr. Mehta', title: 'Care for the whole person.', accent: 'whole',
       paragraphs: [
-        'Dr. Natasha Mehta is an associate physician at Westside Interventional Pain & Physiatry. She is double board-certified in Physical Medicine and Rehabilitation (PM&R) and in traumatic brain injury.',
+        'Dr. Natasha Mehta is a physician at Westside Interventional Pain & Physiatry. She is double board-certified in Physical Medicine and Rehabilitation (PM&R) and in traumatic brain injury.',
         'PM&R doctors look at how your body works as a whole. The goal is not only to lower pain, but to help you move, work and live better.',
-        'Dr. Mehta works with Dr. Rispoli and the full care team, so each patient gets a clear plan and many sets of expert eyes.',
+        'Dr. Mehta works side by side with her fellow physicians on the care team, so each patient gets a clear plan and many sets of expert eyes.',
       ],
       approachTitle: 'How she works with you',
       approach: [
@@ -81,7 +81,7 @@ export const providers: ProviderPage[] = [
         { stage: 'Board certification', place: 'Physical Medicine & Rehabilitation', where: 'Board-certified specialist', notes: ['Function, movement and pain'], icon: 'hospital' },
         { stage: 'Board certification', place: 'Traumatic Brain Injury', where: 'Board-certified specialist', notes: ['Care after head injuries'], icon: 'award' },
       ],
-      destination: { stage: 'Today', place: 'Double board-certified', where: 'Associate Physician at Westside Interventional Pain & Physiatry' },
+      destination: { stage: 'Today', place: 'Double board-certified', where: 'Physician at Westside Interventional Pain & Physiatry' },
     },
     cta: cta('Dr. Mehta', 'Dr. Mehta.'),
   },
@@ -155,7 +155,7 @@ export const providers: ProviderPage[] = [
       paragraphs: [
         'Dr. Katrina Vlachos is board-certified in Physical Medicine and Rehabilitation (PM&R). She is part of the physician team at Westside Interventional Pain & Physiatry.',
         'PM&R is the medical specialty for restoring movement and function. Dr. Vlachos helps people with pain, weakness and nerve problems understand what is going on and what can help.',
-        'She works closely with Dr. Rispoli and the rest of the team, so your care stays connected from one visit to the next.',
+        'She works closely with her colleagues on the care team, so your care stays connected from one visit to the next.',
       ],
       approachTitle: 'How she works with you',
       approach: [

@@ -104,6 +104,39 @@ function Card({ p, lead, i, offset }: { p: Provider; lead?: boolean; i: number; 
   );
 }
 
+
+function WideCard({ p }: { p: Provider }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.li
+      initial={reduce ? false : { opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.75, ease: EASE }}
+    >
+      <a href={p.href} className="group grid rounded-xl bg-white p-3 shadow-[0_30px_60px_-38px_rgba(10,27,61,0.5)] ring-1 ring-navy/5 transition-shadow duration-500 hover:shadow-[0_40px_70px_-34px_rgba(10,27,61,0.55)] md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-10 md:p-4">
+        <Photo p={p} ratio="aspect-square" />
+        <div className="flex flex-col justify-center px-3 pb-5 pt-6 md:px-0 md:py-6 md:pr-8">
+          {p.badge && (
+            <span className="inline-flex w-fit items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.24em] text-palm">
+              <span className="h-px w-8 bg-palm" />{p.badge}
+            </span>
+          )}
+          <h3 className="mt-3 font-display text-[2.1rem] leading-tight text-navy lg:text-[2.8rem]">{p.name}</h3>
+          <p className="mt-1 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate">{p.role}</p>
+          {p.bio && <div className="mt-5 max-w-[60ch] space-y-3 text-[17px] leading-relaxed text-slate">{p.bio.map((b, k) => <p key={k}>{b}</p>)}</div>}
+          <div className="pt-7">
+            <span className="relative inline-flex items-center gap-3 overflow-hidden rounded-full border border-navy/25 px-6 py-3 text-[12px] font-semibold uppercase tracking-[0.2em] text-navy transition-colors duration-500 group-hover:border-navy group-hover:text-white">
+              <span aria-hidden="true" className="absolute inset-0 -translate-x-full bg-navy transition-transform duration-500 group-hover:translate-x-0" />
+              <span className="relative flex items-center gap-3">View profile <Arrow /></span>
+            </span>
+          </div>
+        </div>
+      </a>
+    </motion.li>
+  );
+}
+
 export default function TeamSection({ data, bookingUrl }: Props) {
   const reduce = useReducedMotion();
   const fade = (delay = 0) => ({
@@ -132,13 +165,13 @@ export default function TeamSection({ data, bookingUrl }: Props) {
           </div>
         </div>
 
-        {/* Two lead providers, larger, gently staggered */}
-        <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:mt-20 lg:gap-10">
-          {data.lead.map((p, i) => <Card key={p.slug} p={p} lead i={i} />)}
+        {/* The founder, featured quietly in one wide card */}
+        <ul className="mt-14 lg:mt-20">
+          {data.lead.map((p) => <WideCard key={p.slug} p={p} />)}
         </ul>
 
-        {/* Three providers: same card style, equal size */}
-        <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:mt-10 lg:grid-cols-3 lg:gap-10">
+        {/* Four providers: same card style, equal size */}
+        <ul className="mt-6 grid gap-6 sm:grid-cols-2 lg:mt-8 lg:grid-cols-4 lg:gap-8">
           {data.peers.map((p, i) => <Card key={p.slug} p={p} i={i} />)}
         </ul>
 
