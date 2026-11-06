@@ -187,7 +187,7 @@ export default function Header({ nav, bookingUrl, phone, topBar }: Props) {
       <AnimatePresence>
         {nav.filter((n) => n.mega && n.label === mega).map((n) => {
           const m = n.mega!;
-          const kids = (n.children ?? []).filter((c) => c.href !== n.href);
+          const kids = (n.children ?? []).filter((c) => c.href !== n.href || !!c.image);
           const photos = kids.some((c) => c.image);
           return (
             <motion.div
